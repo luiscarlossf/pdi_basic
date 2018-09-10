@@ -8,6 +8,7 @@ import ip
 
 class ProcessingBar(BoxLayout):
     ui = ObjectProperty(None)
+    image_currant = str()
     p = [DefaultProperties(), TransformProperties(ui=ui), FatiamentoProperties(), \
          HistogramProperties(), FilterProperties(), DetectionProperties(), FatColorProperties()]
 
@@ -16,5 +17,16 @@ class ProcessingBar(BoxLayout):
         self.p[index].ui = self.ui
         self.add_widget(Label(text='Propriedades'))
         self.add_widget(self.p[index])
-        self.add_widget(Button(text='Reverter Imagem'))
+        self.add_widget(RevertButton(text='Reverter Imagem'))
 
+    def applyOperation(self, widget):
+        image = self.ui.pdispace.getImage()
+        self.image_currant = image.source
+
+class RevertButton(Button):
+    def __init__(self, processingbar,  **kwargs):
+        self.pb = processingbar
+        super(RevertButton, self).__init__(**kwargs)
+
+    def on_press(self):
+        self.ui.pdispace.setImage(self.pb.image_currant)
