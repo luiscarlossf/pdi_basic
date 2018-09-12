@@ -80,10 +80,44 @@
         text: 'Aplicar Fatiamento'
 
 <HistogramProperties@BoxLayout>:
+    hist: _hist
+    button: _button
+
     orientation: 'vertical'
-    Label:
-        text: 'Digite: '
-    TextInput:
+    Image:
+        id: _hist
 
     Button:
-        text: 'Aplicar Equalização de Histograma'
+        id: _button
+        text: 'Equalizar Histograma'
+
+
+<FilterProperties>:
+    BoxLayout:
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            CheckBox:
+                group: 'filter'
+            Label:
+                halign: 'left'
+                text:  'Max'
+            CheckBox:
+                group: 'filter'
+            Label:
+                halign: 'left'
+                text:  'Min'
+            CheckBox:
+                group: 'filter'
+            Label:
+                halign: 'left'
+                text:  'Media'
+            CheckBox:
+                group: 'filter'
+            Label:
+                halign: 'left'
+                text:  'Mediana'
+        Button:
+            text: 'Aplicar Filtro'
+
+

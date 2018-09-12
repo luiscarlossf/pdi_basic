@@ -19,6 +19,22 @@ class Pdi(BoxLayout):
     processingbar = ObjectProperty(None)
     statusbar = ObjectProperty(None)
 
+    def getImage(self):
+        return self.pdiscape.getImage()
+
+    def getLastFileName(self):
+        return self.menubar.lastfilename
+
+    def getLastPath(self):
+        return self.menubar.lastpath
+
+    def getButtonPressed(self):
+        return self.toolbar.indexbselected
+
+    def setSourceImage(self, filename):
+        self.pdispace.setSourceImage(filename)
+
+
 class PdiApp(App):
     """
       Classe principal da aplicação

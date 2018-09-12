@@ -1,7 +1,10 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
+from kivy.uix.dropdown import DropDown
+
 from os import path
 from kivy.lang.builder import Builder
+import cv2 as cv
 import ip
 
 
@@ -11,6 +14,8 @@ class TransformProperties(BoxLayout):
     gamatextinput = ObjectProperty(None)
     offsettextinput = ObjectProperty(None)
     transformbutton = ObjectProperty(None)
+    first = 1
+    source = None
 
     def __init__(self, ui=None, **kwargs):
         self.ui = ui
@@ -19,20 +24,31 @@ class TransformProperties(BoxLayout):
 
     def on_press(self):
         #item=self.panelimages.current_tab
-        image = self.ui.pdispace.getImage()
-        ip.power_transform(image.source, int(self.consttextinput.text), float(self.gamatextinput.text))
-        image.source = "./images/temporarias/"+path.basename(image.source)
-        image.reload()
+        img = self.ui.pdispace.getImage()
+        if (self.first == 1) or not(self.source == img.source):
+            self.ui.processingbar.image_currant = img.source
+            self.source = img.source
+        else:
+            self.first +=1
+        ip.power_transform(img.source, int(self.consttextinput.text), float(self.gamatextinput.text))
+        img.source = "./images/temporarias/"+path.basename(img.source)
+        img.reload()
 
-class FatiamentoProperties(BoxLayout):
+class BitProperties(BoxLayout):
     def __init__(self, ui=None, **kwargs):
         self.ui = ui
-        super(FatiamentoProperties, self).__init__(**kwargs)
+        super(BitProperties, self).__init__(**kwargs)
 
 class HistogramProperties(BoxLayout):
+    hist = ObjectProperty(None)
+    button = ObjectProperty(None)
+
     def __init__(self, ui=None, **kwargs):
         self.ui = ui
         super(HistogramProperties, self).__init__(**kwargs)
+
+    def equalizar(self):
+        pass
 
 class FilterProperties(BoxLayout):
     def __init__(self, ui=None, **kwargs):
@@ -53,3 +69,6 @@ class DefaultProperties(BoxLayout):
     def __init__(self, ui=None, **kwargs):
         self.ui = ui
         super(DefaultProperties, self).__init__(**kwargs)
+
+class CustomDropDown(DropDown):
+    pass

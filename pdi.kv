@@ -44,6 +44,7 @@
         id: _toolbar
         ui: root
         transbutton: _transbutton
+        bitbutton: _bitbutton
         histbutton: _histbutton
         filterbutton: _filterbutton
         detbutton: _detbutton
@@ -66,6 +67,15 @@
             group:'processing'
             text: 'Transformacao'
             size_hint: .20, 1
+            on_press: self.set_index()
+
+        ButtonTool:
+            id: _bitbutton
+            toolbar: _toolbar
+            group:'processing'
+            text: 'Plano de Bits'
+            size_hint: .20, 1
+            #height: 24
             on_press: self.set_index()
 
         ButtonTool:
