@@ -18,12 +18,15 @@ class PdiSpace(BoxLayout):
     panelimages = ObjectProperty(None)
     filename = "Bem vindo!"
 
+    #Retorna a Image Object corrente no panel de imagens
     def getImage(self):
         return self.panelimages.current_tab.content
 
+    #Modifica a image corrente no panel de imagens
     def setSourceImage(self, source):
         self.panelimages.current_tab.content.source = source
 
+    #Adiciona uma nova imagem, ou novo item, no panel de images
     def addImage(self, filename):
         self.filename = filename
         item = TabbedPanelHeader(text= path.basename(filename))
