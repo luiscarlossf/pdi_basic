@@ -6,7 +6,7 @@ from kivy.uix.togglebutton import ToggleButton
 class ToolBar(BoxLayout):
     ui = ObjectProperty(None)
     transbutton = ObjectProperty(None)
-    potbutton = ObjectProperty(None)
+    bitbutton = ObjectProperty(None)
     histbutton = ObjectProperty(None)
     filterbutton = ObjectProperty(None)
     detbutton = ObjectProperty(None)
@@ -26,7 +26,7 @@ class ButtonTool(ToggleButton):
     def get_index(self, widget):
         if self.toolbar.transbutton == widget:
             return 1
-        elif self.toolbar.potbutton == widget:
+        elif self.toolbar.bitbutton == widget:
             return 2
         elif self.toolbar.histbutton == widget:
             return 3
