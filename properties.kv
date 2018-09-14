@@ -80,44 +80,64 @@
         text: 'Aplicar Fatiamento'
 
 <HistogramProperties@BoxLayout>:
-    hist: _hist
-    button: _button
-
+    id : _histo
     orientation: 'vertical'
-    Image:
-        id: _hist
-
     Button:
-        id: _button
         text: 'Equalizar Histograma'
+        on_press: _histo.equalizar()
 
 
-<FilterProperties>:
+<FilterProperties@BoxLayout>:
+    id: _filter
+    kernelTextInput: _kernel
+    mediana: _mediana
+    media: _media
+    max: _max
+    min: _min
     BoxLayout:
         orientation: 'vertical'
         GridLayout:
             cols: 2
             CheckBox:
+                id: _max
                 group: 'filter'
             Label:
                 halign: 'left'
                 text:  'Max'
             CheckBox:
+                id: _min
                 group: 'filter'
             Label:
                 halign: 'left'
                 text:  'Min'
             CheckBox:
+                id: _media
                 group: 'filter'
             Label:
                 halign: 'left'
                 text:  'Media'
             CheckBox:
+                id: _mediana
                 group: 'filter'
             Label:
                 halign: 'left'
                 text:  'Mediana'
+
+        Label:
+            text: 'Kernel: (entrada, entrada)'
+        TextInput:
+            id: _kernel
+            size_hint: (1, None)
+            height: 90
+
         Button:
             text: 'Aplicar Filtro'
+            on_press: _filter.on_press()
+
+<DetectionProperties@BoxLayout>:
+    id: _detec
+    Button:
+        text: 'Detectar bordas'
+        on_press: _detec.detectar()
 
 
