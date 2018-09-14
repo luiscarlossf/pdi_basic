@@ -22,6 +22,9 @@ class Pdi(BoxLayout):
     def getImage(self):
         return self.pdiscape.getImage()
 
+    def getSourceImage(self):
+        return self.pdispace.getImage().source
+
     def getLastFileName(self):
         return self.menubar.lastfilename
 
