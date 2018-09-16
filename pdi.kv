@@ -129,11 +129,6 @@
                 Rectangle:
                     pos: self.pos
                     size: self.size
-            TabbedPanelItem:
-                text: 'Welcome!'
-                Image:
-                    id: _image
-                    source: './images/deadpool.jpg'
 
 #PROCESSING BAR
         ProcessingBar:
@@ -188,7 +183,7 @@
         orientation: "vertical"
         FileChooserIconView:
             id: filechooser
-            path: '/home'
+            path: './'
             filters: ['*.png', '*.jpg','*.JPG', '*.JPEG' '*.jpeg','*.bmp']
 
         BoxLayout:
@@ -211,7 +206,7 @@
         FileChooserIconView:
             id: filechooser
             filters: ['*.png', '*.jpg', '*.jpeg','*.bmp']
-            path: '../'
+            path: './'
             on_selection: text_input.text = self.selection and self.selection[0] or ''
 
         TextInput:
