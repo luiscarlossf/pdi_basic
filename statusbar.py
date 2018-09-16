@@ -8,4 +8,4 @@ class StatusBar(BoxLayout):
     labelleft = ObjectProperty(None)
 
     def update_status(self):
-        self.labelright.text = "Mude"
+        self.labelright.text = self.ui.pdispace.filename
