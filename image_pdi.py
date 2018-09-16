@@ -2,11 +2,13 @@ import cv2
 from matplotlib import pyplot as plt
 import numpy as np
 import os
+from PIL import ImageFilter, Image
+
 
 class Image:
 
     def __init__(self, filename):
-        self.image = cv2.imread(filename)
+        self.image = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
         self.filename = filename
         self.kernel = np.ones((6, 6), np.float32) / 25  # definição do KERNEL/MÁSCARA
 
@@ -18,22 +20,45 @@ class Image:
     def setKernel(self, altura, largura):
         self.kernel = np.ones((altura, largura), np.float32) / 25
 
-    def media_filter(self, size):  # aplicar o filtro da MÉDIA
-        image = cv2.imread(self.filename)
-        cv2.blur(image, (size, size))
+    def power(self,const, gama, offset = None):
+        a = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
+        if offset == None:
+            x = const * (((a - a.min()) / (a.max() - a.min())) ** gama)
+        else:
+            x = const * ((((a + offset)- a.min()) / (a.max() - a.min())) ** gama)
+        x = np.array(((a.max() - a.min()) * x) + a.min(), dtype=np.uint8)
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(newfilename, self.image)
+        cv2.imwrite(newfilename, x)
         return newfilename
 
 
+    def min_filter(self, kernel):  # aplicar o filtro MINIMO
+        im = Image.open(self.filename)
+        image = im.filter(ImageFilter.MinFilter(kernel))
+        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
+        image.save(newfilename)
+        return newfilename
+
+    def max_filter(self, kernel):  # aplicar o filtro MAXIMO
+        im = Image.open(self.filename)
+        image = im.filter(ImageFilter.MaxFilter(kernel))
+        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
+        image.save(newfilename)
+        return newfilename
+
+    def media_filter(self, size):  # aplicar o filtro da MÉDIA
+        blur = cv2.blur(self.image,(size, size))
+        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(newfilename, blur)
+        return newfilename
+
     def median_filter(self, size):  # aplicar o filtro da MEDIANA
         # elimina eficientemento o ruído (sal e pimenta)
-        image = cv2.imread(self.filename)
         if(size%2 == 0):
             size += 1
-        cv2.medianBlur(self.image, size)
+        medianBlur = cv2.medianBlur(self.image, size)
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(newfilename, self.image)
+        cv2.imwrite(newfilename, medianBlur)
         return newfilename
 
     def filter2d(self, ddepth = -1):  # CONVOLUÇÃO DISCRETA 2D
@@ -45,14 +70,20 @@ class Image:
         return newfilename
 
     def histogram(self):
+        plt.gcf().clear()
         cv2.calcHist(self.image, [0], None, [256], [0, 256])
         plt.hist(self.image.ravel(), 256, [0, 256])
         plt.title('Histograma')
         plt.xlabel('Valores dos pixels')
         plt.ylabel('Qntd. de pixels')
         plt.grid(True)
-
-        return plt.gcf()
+        newfilename = "./images/temporarias/histogram.jpg"
+        try:
+            os.remove(newfilename)
+        except FileNotFoundError:
+            pass
+        plt.savefig(newfilename)
+        return newfilename
 
     def histogram_bgr(self):
         color = ('b', 'g', 'r')
@@ -96,13 +127,24 @@ class Image:
     def equalize(self):
         # EQUALIZAÇÃO DO HISTOGRAMA --> "esticar" o hist, evitar que fique concentrado apenas em um ponto alto
         # Melhorar o contraste da imagem --> aumentar detalhes
-        equa = cv2.equalizeHist(images=self.image)
+        plt.gcf().clear()
+       # self.image = cv2.imread(self.filename, 0)
+        #self.image = cv2.cvtColor(self.image, cv2.COLOR_RGB2GRAY)
+        equa = cv2.equalizeHist(src=self.image)
         cv2.calcHist(equa, [0], None, [256], [0, 256])
         plt.hist(equa.ravel(), 256, [0, 256])
         plt.title('Histograma Equalizado')
         plt.xlabel('Valores dos pixels')
         plt.ylabel('Qntd. de pixels')
         plt.grid(True)
-        return plt.gcf()
+
+        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(newfilename, equa)
+        plt.savefig("./images/temporarias/histogram.jpg")
+        return newfilename
         # res = np.hstack((img, equa))  # colocar imagem original e equa lado a lado
         # cv2.imwrite("D:\imagem_equalizada.jpg", res)
+
+if __name__=="__main__":
+    y = Image("./images/images_chapter_03/Fig3.35(a).jpg")
+    y.media_filter(35)
