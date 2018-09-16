@@ -10,17 +10,24 @@ import os
 class ProcessingBar(BoxLayout):
     ui = ObjectProperty(None)
     image_currant = str()
+    index = -1
     p = [DefaultProperties(), TransformProperties(ui=ui), BitProperties(),HistogramProperties(ui=ui), \
          FilterProperties(), DetectionProperties(), FatColorProperties()]
 
     def addProperties(self, index):
+        self.index = index
         self.clear_widgets()
         self.p[index].ui = self.ui
         self.add_widget(Label(text='Propriedades', size_hint=(1, 0.2)))
         self.add_widget(self.p[index])
         self.add_widget(RevertButton(self.ui, self, text='Reverter', size_hint=(1, 0.3)))
         self.add_widget(CloseButton(self.ui, text='Fechar Imagem', size_hint=(1, 0.3)))
+        self.setHistogram()
 
+    def setHistogram(self):
+        if self.index == 3:
+            self.p[self.index].setHistogram()
+            self.p[self.index].hist.reload()
     # def salveImageCurrant(self):
     #     self.image_currant = image.source
 
@@ -32,8 +39,9 @@ class RevertButton(Button):
         super(RevertButton, self).__init__(**kwargs)
 
     def on_press(self):
-        os.remove(self.ui.getSourceImage())
         self.ui.pdispace.setSourceImage(self.pb.image_currant)
+        self.ui.pdispace.getImage().reload()
+        self.ui.processingbar.setHistogram()
 
 class CloseButton(Button):
     def __init__(self, ui,  **kwargs):
