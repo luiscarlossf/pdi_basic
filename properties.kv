@@ -70,6 +70,7 @@
             text: 'Aplicar Transformação de Potência'
             on_press: _transform.on_press()
 
+
 <FatiamentoProperties@BoxLayout>:
     orientation: 'vertical'
     Label:
@@ -81,11 +82,74 @@
 
 <HistogramProperties@BoxLayout>:
     id : _histo
+    hist: _hist
     orientation: 'vertical'
+    Image:
+        id: _hist
+
     Button:
+        size_hint: (1, 0.3)
         text: 'Equalizar Histograma'
         on_press: _histo.equalizar()
 
+<BitProperties@BoxLayout>:
+    id: _bit
+    BoxLayout:
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            CheckBox:
+                id: _um
+                #group: 'bits'
+            Label:
+                halign: 'left'
+                text:  'Plano 1'
+            CheckBox:
+                id: _dois
+                #group: 'bits'
+            Label:
+                halign: 'left'
+                text:  'Plano 2'
+            CheckBox:
+                id: _tres
+                #group: 'bits'
+            Label:
+                halign: 'left'
+                text:  'Plano 3'
+            CheckBox:
+                id: _quatro
+                #group: 'bits'
+            Label:
+                halign: 'left'
+                text:  'Plano 4'
+            CheckBox:
+                id: _cinco
+                #group: 'bits'
+            Label:
+                halign: 'left'
+                text:  'Plano 5'
+            CheckBox:
+                id: _seis
+                #group: 'bits'
+            Label:
+                halign: 'left'
+                text:  'Plano 6'
+            CheckBox:
+                id: _sete
+                #group: 'bits'
+            Label:
+                halign: 'left'
+                text:  'Plano 7'
+            CheckBox:
+                id: _oito
+                #group: 'bits'
+            Label:
+                halign: 'left'
+                text:  'Plano 8'
+
+        Button:
+            text: 'Fatiar'
+            on_press: _bit.on_press()
 
 <FilterProperties@BoxLayout>:
     id: _filter
