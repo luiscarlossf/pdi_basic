@@ -2,14 +2,9 @@
 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
-from kivy.uix.tabbedpanel import TabbedPanelItem, TabbedPanelContent, TabbedPanelHeader
+from kivy.uix.tabbedpanel import  TabbedPanelHeader
 from kivy.uix.image import Image
-from kivy.uix.label import Label
-from properties import TransformProperties
-from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
-from cv2 import imread,imshow
-import ip
 
 from os import path
 
@@ -20,7 +15,8 @@ class PdiSpace(BoxLayout):
 
     #Retorna a Image Object corrente no panel de imagens
     def getImage(self):
-        return self.panelimages.current_tab.content
+        image = self.panelimages.current_tab.content
+        return image
 
     #Modifica a image corrente no panel de imagens
     def setSourceImage(self, source):
@@ -29,17 +25,25 @@ class PdiSpace(BoxLayout):
     #Adiciona uma nova imagem, ou novo item, no panel de images
     def addImage(self, filename):
         self.filename = filename
-        item = TabbedPanelHeader(text= path.basename(filename))
+        item = PDIHeader(ui=self.ui, text= path.basename(filename))
         item.content = Image(source=filename)
         self.panelimages.add_widget(item)
+        self.panelimages.switch_to(item)
         self.ui.statusbar.labelright.text = self.filename
-
-    def on_touch_down(self, touch):
-        if self.collide_point(*touch.pos):
-            self.ui.statusbar.labelright.text = self.getImage().source
-        return super(PdiSpace, self).on_touch_down(touch)
 
 class propertyGroup(BoxLayout):
     pass
+
+class PDIHeader(TabbedPanelHeader, Button):
+
+    def __init__(self, ui=None, **kwargs):
+        self.ui = ui
+        super(PDIHeader, self).__init__(**kwargs)
+
+    def on_press(self):
+        self.ui.statusbar.labelright.text = self.content.source
+        self.ui.processingbar.setHistogram()
+
+
 
 
