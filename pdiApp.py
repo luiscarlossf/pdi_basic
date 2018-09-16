@@ -37,7 +37,6 @@ class Pdi(BoxLayout):
     def setSourceImage(self, filename):
         self.pdispace.setSourceImage(filename)
 
-
 class PdiApp(App):
     """
       Classe principal da aplicação
