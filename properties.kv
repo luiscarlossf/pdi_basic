@@ -70,16 +70,6 @@
             text: 'Aplicar Transformação de Potência'
             on_press: _transform.on_press()
 
-
-<FatiamentoProperties@BoxLayout>:
-    orientation: 'vertical'
-    Label:
-        text: 'Digite: '
-    TextInput:
-
-    Button:
-        text: 'Aplicar Fatiamento'
-
 <HistogramProperties@BoxLayout>:
     id : _histo
     hist: _hist
@@ -204,4 +194,24 @@
         text: 'Detectar bordas'
         on_press: _detec.detectar()
 
-
+<FatColorProperties>:
+    id: _fat
+    slices: _slices
+    corinput: _corInput
+    colorwheel: _colorwheel
+    orientation: 'vertical'
+    ColorP:
+        id: _colorwheel
+        fat: _fat
+    Label:
+        id: _corInput
+        text: _colorwheel.cor
+    Label:
+        text: 'Inserir slices de cores: '
+    TextInput:
+        id: _slices
+    Button:
+        size_hint: 1, None
+        height: 50
+        text: 'Aplicar Fatiamento'
+        on_press: _fat.fatia()

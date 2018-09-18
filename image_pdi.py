@@ -144,7 +144,8 @@ class Image:
         return newfilename
         # res = np.hstack((img, equa))  # colocar imagem original e equa lado a lado
         # cv2.imwrite("D:\imagem_equalizada.jpg", res)
-
+    def fatiamento(self):
+        pass
 if __name__=="__main__":
     y = Image("./images/images_chapter_03/Fig3.35(a).jpg")
     y.media_filter(35)

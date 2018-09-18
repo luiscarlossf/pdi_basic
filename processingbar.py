@@ -4,7 +4,6 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from properties import DefaultProperties,TransformProperties, BitProperties, HistogramProperties
 from properties import DetectionProperties, FatColorProperties, FilterProperties
-import ip
 import os
 
 class ProcessingBar(BoxLayout):

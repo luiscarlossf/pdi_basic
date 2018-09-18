@@ -1,16 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
+from kivy.uix.colorpicker import ColorPicker, ColorWheel
 from kivy.uix.dropdown import DropDown
-
-from image_pdi import Image as PI
-
-from backend_kivyagg import FigureCanvasKivyAgg
-from kivy.uix.button import Button
-
-from os import path
-from kivy.lang.builder import Builder
-import cv2 as cv
-import ip
 
 from image_pdi import Image as PI
 
@@ -125,9 +116,16 @@ class DetectionProperties(BoxLayout):
         img.reload()
 
 class FatColorProperties(BoxLayout):
+    colorwheel = ObjectProperty(None)
+    corinput = ObjectProperty(None)
+    slices = ObjectProperty(None)
+
     def __init__(self, ui=None, **kwargs):
         self.ui = ui
         super(FatColorProperties, self).__init__(**kwargs)
+
+    def fatia(self):
+        s = self.slices.text.split(";")
 
 class DefaultProperties(BoxLayout):
     def __init__(self, ui=None, **kwargs):
@@ -136,3 +134,14 @@ class DefaultProperties(BoxLayout):
 
 class CustomDropDown(DropDown):
     pass
+
+class ColorP(ColorWheel):
+    cor = ""
+    fat = ObjectProperty(None)
+    def __init__(self, **kwargs):
+        self.bind(color= self.on_color)
+        super(ColorP, self).__init__(**kwargs)
+
+    def on_color(self, instance, value):
+        self.cor = str(value)
+        self.fat.corinput.text = str(value)
