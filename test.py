@@ -44,11 +44,28 @@ def bit_plane_slicing():
     r = input()
 
 def bit(const, gama):
-    a = cv.imread("./images/images_chapter_03/Fig3.08(a).jpg", cv.IMREAD_GRAYSCALE)
-    b = a < 0
-    x = const * (((a-a.min())/(a.max() - a.min())) ** gama)
-    x = np.array(((a.max() - a.min()) * x) + a.min(), dtype=np.uint8)
-    cv.imwrite("./images/temporarias/Fig3.08(a).jpg", x)
+    a = cv.imread("./images/estrada.jpg", cv.IMREAD_GRAYSCALE)
+    # = np.array([[1, 2,3,4],[5,6,7,8]], dtype=np.uint8)
+    p1 = np.array([[int(np.binary_repr(a[i][j], 8)[7]) * 255  for j in range(0, a.shape[1])] for i in range(0,a.shape[0])])
+    cv.imwrite("./images/temporarias/1.jpg", p1)
+    p2 = np.array([[int(np.binary_repr(a[i][j], 8)[6]) * 255 for j in range(0, a.shape[1])] for i in range(0, a.shape[0])])
+    cv.imwrite("./images/temporarias/2.jpg", p2)
+    p3 = np.array([[int(np.binary_repr(a[i][j], 8)[5]) * 255 for j in range(0, a.shape[1])] for i in range(0, a.shape[0])])
+    cv.imwrite("./images/temporarias/3.jpg", p3)
+    p4 = np.array([[int(np.binary_repr(a[i][j], 8)[4]) * 255 for j in range(0, a.shape[1])] for i in range(0, a.shape[0])])
+    cv.imwrite("./images/temporarias/4.jpg", p4)
+    p5 = np.array([[int(np.binary_repr(a[i][j], 8)[3]) * 255 for j in range(0, a.shape[1])] for i in range(0, a.shape[0])])
+    cv.imwrite("./images/temporarias/5.jpg", p5)
+    p6 = np.array([[int(np.binary_repr(a[i][j], 8)[2]) * 255 for j in range(0, a.shape[1])] for i in range(0, a.shape[0])])
+    cv.imwrite("./images/temporarias/6.jpg", p6)
+    p7 = np.array([[int(np.binary_repr(a[i][j], 8)[1]) * 255 for j in range(0, a.shape[1])] for i in range(0, a.shape[0])])
+    cv.imwrite("./images/temporarias/7.jpg", p7)
+    p8 = np.array([[int(np.binary_repr(a[i][j], 8)[0]) * 255 for j in range(0, a.shape[1])] for i in range(0, a.shape[0])])
+    cv.imwrite("./images/temporarias/8.jpg", p8)
+
+    print("--------------------------------------------------")
+    print(p1)
+
 
 if __name__=='__main__':
     bit(1, 0.3)
