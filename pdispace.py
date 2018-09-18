@@ -30,6 +30,7 @@ class PdiSpace(BoxLayout):
         self.panelimages.add_widget(item)
         self.panelimages.switch_to(item)
         self.ui.statusbar.labelright.text = self.filename
+        self.ui.processingbar.setHistogram(filename)
 
 class propertyGroup(BoxLayout):
     pass
@@ -41,8 +42,9 @@ class PDIHeader(TabbedPanelHeader, Button):
         super(PDIHeader, self).__init__(**kwargs)
 
     def on_press(self):
-        self.ui.statusbar.labelright.text = self.content.source
-        self.ui.processingbar.setHistogram()
+        source = str(self.content.source)
+        self.ui.statusbar.labelright.text = source
+        self.ui.processingbar.setHistogram(source)
 
 
 
