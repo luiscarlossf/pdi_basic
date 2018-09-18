@@ -144,8 +144,13 @@ class Image:
         return newfilename
         # res = np.hstack((img, equa))  # colocar imagem original e equa lado a lado
         # cv2.imwrite("D:\imagem_equalizada.jpg", res)
-    def fatiamento(self):
-        pass
+    def fatiamento(self, plane):
+        a = self.image
+        # = np.array([[1, 2,3,4],[5,6,7,8]], dtype=np.uint8)
+        p = np.array([[int(np.binary_repr(a[i][j], 8)[8 - plane]) * 255 for j in range(0, a.shape[1])] for i in range(0, a.shape[0])])
+        cv2.imwrite("./images/temporarias/"+str(plane)+".jpg", p)
+        return "./images/temporarias/"+str(plane)+".jpg"
+
 if __name__=="__main__":
     y = Image("./images/images_chapter_03/Fig3.35(a).jpg")
     y.media_filter(35)
