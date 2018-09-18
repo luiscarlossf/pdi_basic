@@ -1,16 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
+from kivy.uix.colorpicker import ColorPicker, ColorWheel
 from kivy.uix.dropdown import DropDown
-
-from image_pdi import Image as PI
-
-from backend_kivyagg import FigureCanvasKivyAgg
-from kivy.uix.button import Button
-
-from os import path
-from kivy.lang.builder import Builder
-import cv2 as cv
-import ip
 
 from image_pdi import Image as PI
 
@@ -41,13 +32,49 @@ class TransformProperties(BoxLayout):
         img.reload()
 
 class BitProperties(BoxLayout):
+    um = ObjectProperty(None)
+    dois = ObjectProperty(None)
+    tres = ObjectProperty(None)
+    quatro = ObjectProperty(None)
+    cinco = ObjectProperty(None)
+    seis = ObjectProperty(None)
+    sete = ObjectProperty(None)
+    oito = ObjectProperty(None)
+
     def __init__(self, ui=None, **kwargs):
         self.ui = ui
         self.lista = list()
         super(BitProperties, self).__init__(**kwargs)
 
-    def on_press(self):
-        pass
+    def show_planes(self):
+        img = self.ui.pdispace.getImage()
+        source = str(img.source)
+        self.ui.processingbar.image_currant = source
+        if self.um.active:
+            new = PI(filename=source).fatiamento(1)
+            self.ui.pdispace.addImage(new)
+        if self.dois.active:
+            new = PI(filename=source).fatiamento(2)
+            self.ui.pdispace.addImage(new)
+        if self.tres.active:
+            new = PI(filename=source).fatiamento(3)
+            self.ui.pdispace.addImage(new)
+        if self.quatro.active:
+            new = PI(filename=source).fatiamento(4)
+            self.ui.pdispace.addImage(new)
+        if self.cinco.active:
+            new = PI(filename=source).fatiamento(5)
+            self.ui.pdispace.addImage(new)
+        if self.seis.active:
+            new = PI(filename=source).fatiamento(6)
+            self.ui.pdispace.addImage(new)
+        if self.sete.active:
+            new = PI(filename=source).fatiamento(7)
+            self.ui.pdispace.addImage(new)
+        if self.oito.active:
+            new = PI(filename=source).fatiamento(8)
+            self.ui.pdispace.addImage(new)
+
 
 class HistogramProperties(BoxLayout):
     hist = ObjectProperty(None)
@@ -59,10 +86,14 @@ class HistogramProperties(BoxLayout):
         super(HistogramProperties, self).__init__(**kwargs)
 
 
-    def setHistogram(self):
-        newfilename = PI(filename=self.ui.pdispace.getImage().source).histogram()
-        self.hist.source = newfilename
-        self.hist.reload()
+    def setHistogram(self, filename):
+        try:
+            newfilename = PI(filename=filename).histogram()
+            self.hist.source = newfilename
+            self.hist.reload()
+        except AttributeError:
+            self.hist.source = " "
+            self.hist.reload()
 
 
     def get_gcf(self, source):
@@ -70,13 +101,14 @@ class HistogramProperties(BoxLayout):
         return plt
 
     def equalizar(self):
-        img = self.ui.pdispace.getImage()
-        source = str(img.source)
-        self.ui.processingbar.image_currant = source
-        new = PI(filename=source).equalize()
-        img.source = new
-        img.reload()
-        self.hist.reload()
+        if self.ui.pdispace.panelimages.content != 'None':
+            img = self.ui.pdispace.getImage()
+            source = str(img.source)
+            self.ui.processingbar.image_currant = source
+            new = PI(filename=source).equalize()
+            img.source = new
+            img.reload()
+            self.hist.reload()
 
 
 class FilterProperties(BoxLayout):
@@ -125,9 +157,16 @@ class DetectionProperties(BoxLayout):
         img.reload()
 
 class FatColorProperties(BoxLayout):
+    colorwheel = ObjectProperty(None)
+    corinput = ObjectProperty(None)
+    slices = ObjectProperty(None)
+
     def __init__(self, ui=None, **kwargs):
         self.ui = ui
         super(FatColorProperties, self).__init__(**kwargs)
+
+    def fatia(self):
+        s = self.slices.text.split(";")
 
 class DefaultProperties(BoxLayout):
     def __init__(self, ui=None, **kwargs):
@@ -136,3 +175,14 @@ class DefaultProperties(BoxLayout):
 
 class CustomDropDown(DropDown):
     pass
+
+class ColorP(ColorWheel):
+    cor = ""
+    fat = ObjectProperty(None)
+    def __init__(self, **kwargs):
+        self.bind(color= self.on_color)
+        super(ColorP, self).__init__(**kwargs)
+
+    def on_color(self, instance, value):
+        self.cor = str(value)
+        self.fat.corinput.text = str(value)

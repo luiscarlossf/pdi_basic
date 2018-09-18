@@ -4,7 +4,6 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from properties import DefaultProperties,TransformProperties, BitProperties, HistogramProperties
 from properties import DetectionProperties, FatColorProperties, FilterProperties
-import ip
 import os
 
 class ProcessingBar(BoxLayout):
@@ -22,11 +21,11 @@ class ProcessingBar(BoxLayout):
         self.add_widget(self.p[index])
         self.add_widget(RevertButton(self.ui, self, text='Reverter', size_hint=(1, 0.3)))
         self.add_widget(CloseButton(self.ui, text='Fechar Imagem', size_hint=(1, 0.3)))
-        self.setHistogram()
+        self.setHistogram(self.ui.pdispace.getImage().source)
 
-    def setHistogram(self):
+    def setHistogram(self, filename):
         if self.index == 3:
-            self.p[self.index].setHistogram()
+            self.p[self.index].setHistogram(filename)
             self.p[self.index].hist.reload()
     # def salveImageCurrant(self):
     #     self.image_currant = image.source
@@ -41,7 +40,7 @@ class RevertButton(Button):
     def on_press(self):
         self.ui.pdispace.setSourceImage(self.pb.image_currant)
         self.ui.pdispace.getImage().reload()
-        self.ui.processingbar.setHistogram()
+        self.ui.processingbar.setHistogram(self.pb.image_currant)
 
 class CloseButton(Button):
     def __init__(self, ui,  **kwargs):
@@ -50,7 +49,12 @@ class CloseButton(Button):
 
     def on_press(self):
         panelimages = self.ui.pdispace.panelimages
+        panelimages.content.source = " "
         panelimages.remove_widget(panelimages.content)
         panelimages.remove_widget(panelimages.current_tab)
-        panelimages.switch_to(panelimages.tab_list[0],do_scroll=False)
-        self.ui.setSourceImage(" ")
+        try:
+            panelimages.switch_to(panelimages.tab_list[0],do_scroll=False)
+        except IndexError:
+            panelimages.clear_widgets()
+
+
