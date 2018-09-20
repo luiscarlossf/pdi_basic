@@ -67,6 +67,20 @@ def bit(const, gama):
     print(p1)
 
 
+def fatiamento(list):
+    a = cv.imread("./images/images_chapter_03/Fig3.08(a).jpg", cv.IMREAD_GRAYSCALE)
+    rows, cols = a.shape
+    for i in range(0, rows):
+        for j in range(0, cols):
+            for k in list:
+                k = k.split(",");
+                if a[i][j] > int(k[0]) and a[i][j] <= int(k[1]):
+                    a[i][j] = int(k[2])
+                else:
+                    a[i][j] = 255
+    result = cv.cvtColor(a,cv.COLOR_GRAY2RGB)
+    cv.imwrite("./images/temporarias/Fig3.08(a).jpg", result)
+
 if __name__=='__main__':
-    bit(1, 0.3)
+    fatiamento(['0,50, 0'])
 
