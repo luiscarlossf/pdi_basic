@@ -166,7 +166,12 @@ class FatColorProperties(BoxLayout):
         super(FatColorProperties, self).__init__(**kwargs)
 
     def fatia(self):
-        s = self.slices.text.split(";")
+        img = self.ui.pdispace.getImage()
+        source = str(img.source)
+        self.ui.processingbar.image_currant = source
+        new = PI(source).colorful(self.slices.text)
+        img.source = new
+        img.reload()
 
 class DefaultProperties(BoxLayout):
     def __init__(self, ui=None, **kwargs):
