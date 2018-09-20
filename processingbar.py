@@ -21,7 +21,10 @@ class ProcessingBar(BoxLayout):
         self.add_widget(self.p[index])
         self.add_widget(RevertButton(self.ui, self, text='Reverter', size_hint=(1, 0.3)))
         self.add_widget(CloseButton(self.ui, text='Fechar Imagem', size_hint=(1, 0.3)))
-        self.setHistogram(self.ui.pdispace.getImage().source)
+        try:
+            self.setHistogram(self.ui.pdispace.getImage().source)
+        except AttributeError:
+            pass
 
     def setHistogram(self, filename):
         if self.index == 3:
