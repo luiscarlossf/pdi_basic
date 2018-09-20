@@ -144,8 +144,32 @@ class Image:
         return newfilename
         # res = np.hstack((img, equa))  # colocar imagem original e equa lado a lado
         # cv2.imwrite("D:\imagem_equalizada.jpg", res)
-    def fatiamento(self):
-        pass
+    def fatiamento(self, plane):
+        a = self.image
+        # = np.array([[1, 2,3,4],[5,6,7,8]], dtype=np.uint8)
+        p = np.array([[int(np.binary_repr(a[i][j], 8)[8 - plane]) * 255 for j in range(0, a.shape[1])] for i in range(0, a.shape[0])])
+        cv2.imwrite("./images/temporarias/"+str(plane)+".jpg", p)
+        return "./images/temporarias/"+str(plane)+".jpg"
+
+    def colorful(self, st):
+        st = st.replace(" ", "")
+        st = st.replace("(", "")
+        st = st.replace(")", "")
+        lista = st.split(";")
+        a = cv2.imread(self.filename)
+        rows, cols, c = a.shape
+        for i in range(0, rows):
+            for j in range(0, cols):
+                for k in lista:
+                    e = k.split(",")
+                    max = int(e[1])
+                    min = int(e[0])
+                    if (a[i][j][0] >= min) and (a[i][j][0] <= max):
+                        a[i][j] = [int(e[2]), int(e[3]), int(e[4])]
+        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(newfilename, a)
+        return newfilename
+
 if __name__=="__main__":
     y = Image("./images/images_chapter_03/Fig3.35(a).jpg")
     y.media_filter(35)

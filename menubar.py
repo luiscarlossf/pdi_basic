@@ -4,7 +4,8 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
 from filechooser import LoadDialog, SaveDialog
-from cv2 import imwrite
+from cv2 import imwrite, imread
+import platform
 
 import os
 
@@ -35,7 +36,12 @@ class MenuBar(BoxLayout):
         self.dismiss_popup()
 
     def save(self, path, filename):
-        #imwrite(filename, img)
+        img = imread(self.ui.pdispace.getImage().source)
+        if platform.system() == 'Windows':
+            filename = path + '\\' + filename
+        else:
+            filename = path + '/' + filename
+        imwrite(filename, img)
         self.dismiss_popup()
 
     def dismiss_popup(self):
