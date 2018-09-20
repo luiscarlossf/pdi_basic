@@ -162,10 +162,10 @@ class Image:
             for j in range(0, cols):
                 for k in lista:
                     e = k.split(",")
-                    max = int(e[1])
                     min = int(e[0])
+                    max = int(e[1])
                     if (a[i][j][0] >= min) and (a[i][j][0] <= max):
-                        a[i][j] = [int(e[2]), int(e[3]), int(e[4])]
+                        a[i][j] = [int(e[4]), int(e[3]), int(e[2])]
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(newfilename, a)
         return newfilename
