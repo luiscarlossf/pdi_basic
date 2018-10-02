@@ -27,12 +27,12 @@ class Image:
         if offset is None:
             x = const * (((a - a.min()) / (a.max() - a.min())) ** gama)
         else:
-            x = const * ((((a + offset) - a.min()) / (a.max() - a.min())) ** gama)
+            x = (const * ((((a + offset) -
+                            a.min()) / (a.max() - a.min())) ** gama))
         x = np.array(((a.max() - a.min()) * x) + a.min(), dtype=np.uint8)
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(newfilename, x)
         return newfilename
-
 
     def min_filter(self, kernel):  # aplicar o filtro MINIMO
         im = Image.open(self.filename)
@@ -49,21 +49,21 @@ class Image:
         return newfilename
 
     def media_filter(self, size):  # aplicar o filtro da MÉDIA
-        blur = cv2.blur(self.image,(size, size))
+        blur = cv2.blur(self.image, (size, size))
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(newfilename, blur)
         return newfilename
 
     def median_filter(self, size):  # aplicar o filtro da MEDIANA
         # elimina eficientemento o ruído (sal e pimenta)
-        if(size%2 == 0):
+        if(size % 2 == 0):
             size += 1
         medianBlur = cv2.medianBlur(self.image, size)
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(newfilename, medianBlur)
         return newfilename
 
-    def filter2d(self, ddepth = -1):  # CONVOLUÇÃO DISCRETA 2D
+    def filter2d(self, ddepth=-1):  # CONVOLUÇÃO DISCRETA 2D
         # toma como base a imagem e o valor definido no KERNEL
         image = cv2.imread(self.filename)
         cv2.filter2D(image, ddepth, self.kernel)
