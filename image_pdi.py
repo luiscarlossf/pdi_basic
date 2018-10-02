@@ -104,14 +104,19 @@ class Image:
         im = cv2.imread(self.filename)
         imgray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
         ret, thresh = cv2.threshold(imgray, 127, 255, 0)
-        im_o, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        # contours --> é uma lista em Python de todos os contornos da imagem (contorno = matriz)
+        im_o, contours, hierarchy = cv2.findContours(
+                                  thresh,
+                                  cv2.RETR_TREE,
+                                  cv2.CHAIN_APPROX_SIMPLE)
+        # contours --> é uma lista em Python de
+        # todos os contornos da imagem (contorno = matriz)
         # Desenhando os CONTORNOS na Imagem:
         img_cont = cv2.drawContours(im, contours, -1, (0, 255, 0), 3)
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(newfilename, img_cont)
         return newfilename
-        # parametros: (imagem_origem, lista_contornos, índice (-1), cor, espessura...)
+        # parametros: (imagem_origem, lista_contornos,
+        # índice (-1), cor, espessura...)
         # cv2.imwrite("D:\imagem_cont.jpg", img_cont) SALVAR A IMAGEM
 
     def contours_canny(self):
@@ -127,11 +132,12 @@ class Image:
         # cv2.imwrite("D:\imagem_bordasCanny.jpg", result) SALVAR A IMAGEM
 
     def equalize(self):
-        # EQUALIZAÇÃO DO HISTOGRAMA --> "esticar" o hist, evitar que fique concentrado apenas em um ponto alto
+        # EQUALIZAÇÃO DO HISTOGRAMA --> "esticar" o hist,
+        # evitar que fique concentrado apenas em um ponto alto
         # Melhorar o contraste da imagem --> aumentar detalhes
         plt.gcf().clear()
-       # self.image = cv2.imread(self.filename, 0)
-        #self.image = cv2.cvtColor(self.image, cv2.COLOR_RGB2GRAY)
+        # self.image = cv2.imread(self.filename, 0)
+        # self.image = cv2.cvtColor(self.image, cv2.COLOR_RGB2GRAY)
         equa = cv2.equalizeHist(src=self.image)
         cv2.calcHist(equa, [0], None, [256], [0, 256])
         plt.hist(equa.ravel(), 256, [0, 256])
@@ -144,8 +150,10 @@ class Image:
         cv2.imwrite(newfilename, equa)
         plt.savefig("./images/temporarias/histogram.jpg")
         return newfilename
-        # res = np.hstack((img, equa))  # colocar imagem original e equa lado a lado
+        # res = np.hstack((img, equa)) 
+        # colocar imagem original e equa lado a lado
         # cv2.imwrite("D:\imagem_equalizada.jpg", res)
+
     def fatiamento(self, plane):
         a = self.image
         # = np.array([[1, 2,3,4],[5,6,7,8]], dtype=np.uint8)
