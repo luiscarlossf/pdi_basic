@@ -1,4 +1,4 @@
-#File name: pdiApp.py
+# File name: pdiApp.py
 import kivy
 kivy.require("1.10.0")
 from kivy.app import App
@@ -37,12 +37,15 @@ class Pdi(BoxLayout):
     def setSourceImage(self, filename):
         self.pdispace.setSourceImage(filename)
 
+
 class PdiApp(App):
     """
       Classe principal da aplicação
     """
+
     def build(self):
         return Pdi()
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     PdiApp().run()
