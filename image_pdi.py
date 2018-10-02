@@ -1,12 +1,12 @@
-import cv2
-from matplotlib import pyplot as plt
-import numpy as np
 import os
+
+import cv2
+import numpy as np
 from PIL import ImageFilter, Image
+from matplotlib import pyplot as plt
 
 
-class Image:
-
+class ImagePDI:
     def __init__(self, filename):
         self.image = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
         self.filename = filename
@@ -15,59 +15,57 @@ class Image:
     def print_pixels(self):
         print("Altura: %d pixels" % (self.image.shape[0]))  # shape é um vetor --> índice p extrair o necessario
         print("Largura: %d pixels" % (self.image.shape[1]))
-        # print("Canais: %d" % (self.img.shape[2]))
 
-    def setKernel(self, altura, largura):
+    def set_kernel(self, altura, largura):
         self.kernel = np.ones((altura, largura), np.float32) / 25
 
-    def power(self,const, gama, offset = None):
+    def power(self, const, gama, offset=None):
         a = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
-        if offset == None:
+        if offset is None:
             x = const * (((a - a.min()) / (a.max() - a.min())) ** gama)
         else:
-            x = const * ((((a + offset)- a.min()) / (a.max() - a.min())) ** gama)
+            x = const * ((((a + offset) - a.min()) / (a.max() - a.min())) ** gama)
         x = np.array(((a.max() - a.min()) * x) + a.min(), dtype=np.uint8)
-        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(newfilename, x)
-        return newfilename
-
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, x)
+        return new_file_name
 
     def min_filter(self, kernel):  # aplicar o filtro MINIMO
         im = Image.open(self.filename)
         image = im.filter(ImageFilter.MinFilter(kernel))
-        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        image.save(newfilename)
-        return newfilename
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        image.save(new_file_name)
+        return new_file_name
 
     def max_filter(self, kernel):  # aplicar o filtro MAXIMO
         im = Image.open(self.filename)
         image = im.filter(ImageFilter.MaxFilter(kernel))
-        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        image.save(newfilename)
-        return newfilename
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        image.save(new_file_name)
+        return new_file_name
 
     def media_filter(self, size):  # aplicar o filtro da MÉDIA
         blur = cv2.blur(self.image,(size, size))
-        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(newfilename, blur)
-        return newfilename
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, blur)
+        return new_file_name
 
     def median_filter(self, size):  # aplicar o filtro da MEDIANA
         # elimina eficientemento o ruído (sal e pimenta)
-        if(size%2 == 0):
+        if size % 2 == 0:
             size += 1
-        medianBlur = cv2.medianBlur(self.image, size)
-        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(newfilename, medianBlur)
-        return newfilename
+        median_blur = cv2.medianBlur(self.image, size)
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, median_blur)
+        return new_file_name
 
     def filter2d(self, ddepth = -1):  # CONVOLUÇÃO DISCRETA 2D
         # toma como base a imagem e o valor definido no KERNEL
         image = cv2.imread(self.filename)
         cv2.filter2D(image, ddepth, self.kernel)
-        newfilename = "./images/temporarias/"+os.path.basename(self.filename)
-        cv2.imwrite(newfilename, image)
-        return newfilename
+        new_file_name = "./images/temporarias/"+os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, image)
+        return new_file_name
 
     def histogram(self):
         plt.gcf().clear()
@@ -77,19 +75,19 @@ class Image:
         plt.xlabel('Valores dos pixels')
         plt.ylabel('Qntd. de pixels')
         plt.grid(True)
-        newfilename = "./images/temporarias/histogram.jpg"
+        new_file_name = "./images/temporarias/histogram.jpg"
         try:
-            os.remove(newfilename)
+            os.remove(new_file_name)
         except FileNotFoundError:
             pass
-        plt.savefig(newfilename)
-        return newfilename
+        plt.savefig(new_file_name)
+        return new_file_name
 
     def histogram_bgr(self):
         color = ('b', 'g', 'r')
         for i, col in enumerate(color):
-            histograma = cv2.calcHist([self.image], [i], None, [256], [0, 256])
-            plt.plot(histograma, color=col)
+            histogram = cv2.calcHist([self.image], [i], None, [256], [0, 256])
+            plt.plot(histogram, color=col)
             plt.xlim([0, 256])
         plt.title('Histograma: escala BGR')
         plt.xlabel('Valores dos pixels')
@@ -106,9 +104,9 @@ class Image:
         # contours --> é uma lista em Python de todos os contornos da imagem (contorno = matriz)
         # Desenhando os CONTORNOS na Imagem:
         img_cont = cv2.drawContours(im, contours, -1, (0, 255, 0), 3)
-        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(newfilename, img_cont)
-        return newfilename
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, img_cont)
+        return new_file_name
         # parametros: (imagem_origem, lista_contornos, índice (-1), cor, espessura...)
         # cv2.imwrite("D:\imagem_cont.jpg", img_cont) SALVAR A IMAGEM
 
@@ -119,17 +117,15 @@ class Image:
         suave = cv2.GaussianBlur(gray, (7, 7), 0)
         canny = cv2.Canny(suave, 10, 30)  # 20, 120 - menos mais bordas
         result = np.vstack(canny)
-        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(newfilename, result)
-        return newfilename
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, result)
+        return new_file_name
         # cv2.imwrite("D:\imagem_bordasCanny.jpg", result) SALVAR A IMAGEM
 
     def equalize(self):
         # EQUALIZAÇÃO DO HISTOGRAMA --> "esticar" o hist, evitar que fique concentrado apenas em um ponto alto
         # Melhorar o contraste da imagem --> aumentar detalhes
         plt.gcf().clear()
-       # self.image = cv2.imread(self.filename, 0)
-        #self.image = cv2.cvtColor(self.image, cv2.COLOR_RGB2GRAY)
         equa = cv2.equalizeHist(src=self.image)
         cv2.calcHist(equa, [0], None, [256], [0, 256])
         plt.hist(equa.ravel(), 256, [0, 256])
@@ -138,12 +134,13 @@ class Image:
         plt.ylabel('Qntd. de pixels')
         plt.grid(True)
 
-        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(newfilename, equa)
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, equa)
         plt.savefig("./images/temporarias/histogram.jpg")
-        return newfilename
+        return new_file_name
         # res = np.hstack((img, equa))  # colocar imagem original e equa lado a lado
         # cv2.imwrite("D:\imagem_equalizada.jpg", res)
+
     def fatiamento(self, plane):
         a = self.image
         # = np.array([[1, 2,3,4],[5,6,7,8]], dtype=np.uint8)
@@ -155,21 +152,22 @@ class Image:
         st = st.replace(" ", "")
         st = st.replace("(", "")
         st = st.replace(")", "")
-        lista = st.split(";")
+        list_of_strings = st.split(";")
         a = cv2.imread(self.filename)
         rows, cols, c = a.shape
         for i in range(0, rows):
             for j in range(0, cols):
-                for k in lista:
+                for k in list_of_strings:
                     e = k.split(",")
-                    max = int(e[1])
-                    min = int(e[0])
-                    if (a[i][j][0] >= min) and (a[i][j][0] <= max):
+                    max_value = int(e[1])
+                    min_value = int(e[0])
+                    if (a[i][j][0] >= min_value) and (a[i][j][0] <= max_value):
                         a[i][j] = [int(e[2]), int(e[3]), int(e[4])]
-        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(newfilename, a)
-        return newfilename
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, a)
+        return new_file_name
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     y = Image("./images/images_chapter_03/Fig3.35(a).jpg")
     y.media_filter(35)
