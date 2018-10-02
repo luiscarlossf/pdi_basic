@@ -3,6 +3,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from kivy.uix.togglebutton import ToggleButton
 
+
 class ToolBar(BoxLayout):
     ui = ObjectProperty(None)
     transbutton = ObjectProperty(None)
@@ -13,6 +14,7 @@ class ToolBar(BoxLayout):
     fatbutton = ObjectProperty(None)
 
     indexbselected = int()
+
 
 class ButtonTool(ToggleButton):
     toolbar = ObjectProperty(None)
