@@ -1,9 +1,10 @@
-# from kivy.app import App  # Unused
-from kivy.uix.floatlayout import FloatLayout
 from kivy.factory import Factory
 from kivy.properties import ObjectProperty
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.popup import Popup
+
 import os
+
 
 
 class LoadDialog(FloatLayout):
@@ -18,9 +19,11 @@ class SaveDialog(FloatLayout):
 
 
 class Root(FloatLayout):
-    loadfile = ObjectProperty(None)
-    savefile = ObjectProperty(None)
-    text_input = ObjectProperty(None)
+    def __init__(self):
+        self._popup = None
+        self.load_file = ObjectProperty(None)
+        self.save_file = ObjectProperty(None)
+        self.text_input = ObjectProperty(None)
 
     def dismiss_popup(self):
         self._popup.dismiss()

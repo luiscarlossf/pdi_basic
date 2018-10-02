@@ -1,19 +1,24 @@
-from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import ObjectProperty
-from kivy.uix.popup import Popup
-from filechooser import LoadDialog, SaveDialog
-from cv2 import imwrite, imread
+
 import platform
-# import os  # Unused module
-# from kivy.uix.floatlayout import FloatLayout  # Unused module
+
+from cv2 import imwrite, imread
+
+from kivy.properties import ObjectProperty
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.popup import Popup
+
+from filechooser import LoadDialog, SaveDialog
+
 
 
 class MenuBar(BoxLayout):
-    ui = ObjectProperty(None)
-    openbutton = ObjectProperty(None)
-    savebutton = ObjectProperty(None)
-    lastfilename = list()
-    lastpath = str()
+    def __init__(self):
+        self.ui = ObjectProperty(None)
+        self.open_button = ObjectProperty(None)
+        self.save_button = ObjectProperty(None)
+        self.last_file_names = list()
+        self.last_path = str()
+        self._popup = None
 
     def show_load(self):
         print(self.ui)
@@ -29,13 +34,13 @@ class MenuBar(BoxLayout):
         self._popup.open()
 
     def load(self, path, filename):
-        self.lastfilenames = filename
-        self.lastpath = path
-        self.ui.pdispace.addImage(filename[0])
+        self.last_file_names = filename
+        self.last_path = path
+        self.ui.pdi_space.add_image(filename[0])
         self.dismiss_popup()
 
     def save(self, path, filename):
-        img = imread(self.ui.pdispace.getImage().source)
+        img = imread(self.ui.pdi_space.get_image().source)
         if platform.system() == 'Windows':
             filename = path + '\\' + filename
         else:
