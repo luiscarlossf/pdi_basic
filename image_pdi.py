@@ -11,12 +11,10 @@ class ImagePDI:
     def __init__(self, filename):
         self.image = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
         self.filename = filename
-
         # definição do KERNEL/MÁSCARA
         self.kernel = np.ones((6, 6), np.float32) / 25
 
     def print_pixels(self):
-
         # shape é um vetor --> índice p extrair o necessario
         print("Altura: %d pixels" % (self.image.shape[0]))
         print("Largura: %d pixels" % (self.image.shape[1]))
@@ -51,14 +49,14 @@ class ImagePDI:
         return new_file_name
 
     def media_filter(self, size):  # aplicar o filtro da MÉDIA
-        blur = cv2.blur(self.image,(size, size))
+        blur = cv2.blur(self.image, (size, size))
         new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(new_file_name, blur)
         return new_file_name
 
     def median_filter(self, size):  # aplicar o filtro da MEDIANA
         # elimina eficientemento o ruído (sal e pimenta)
-        if size % 2 == 0:
+        if(size % 2 == 0):
             size += 1
         median_blur = cv2.medianBlur(self.image, size)
         new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
@@ -106,16 +104,19 @@ class ImagePDI:
         im = cv2.imread(self.filename)
         imgray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
         ret, thresh = cv2.threshold(imgray, 127, 255, 0)
-        im_o, contours, hierarchy =\
-            cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        # contours --> é uma lista em Python de todos os contornos da imagem
-        # (contorno = matriz)
+        im_o, contours, hierarchy = cv2.findContours(
+                                  thresh,
+                                  cv2.RETR_TREE,
+                                  cv2.CHAIN_APPROX_SIMPLE)
+        # contours --> é uma lista em Python de
+        # todos os contornos da imagem (contorno = matriz)
         # Desenhando os CONTORNOS na Imagem:
         img_cont = cv2.drawContours(im, contours, -1, (0, 255, 0), 3)
         new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(new_file_name, img_cont)
         return new_file_name
-        # parametros: (imagem_origem, lista_contornos, índice (-1), cor, espessura...)
+        # parametros: (imagem_origem, lista_contornos,
+        # índice (-1), cor, espessura...)
         # cv2.imwrite("D:\imagem_cont.jpg", img_cont) SALVAR A IMAGEM
 
     def contours_canny(self):
@@ -147,7 +148,8 @@ class ImagePDI:
         cv2.imwrite(new_file_name, equa)
         plt.savefig("./images/temporarias/histogram.jpg")
         return new_file_name
-        # res = np.hstack((img, equa)) #colocar imagem original e equa lado a lado
+        # res = np.hstack((img, equa)) 
+        #colocar imagem original e equa lado a lado
         # cv2.imwrite("D:\imagem_equalizada.jpg", res)
 
     def fatiamento(self, plane):
@@ -183,3 +185,5 @@ class ImagePDI:
 if __name__ == "__main__":
     y = Image("./images/images_chapter_03/Fig3.35(a).jpg")
     y.media_filter(35)
+
+
