@@ -10,22 +10,24 @@ class Image:
     def __init__(self, filename):
         self.image = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
         self.filename = filename
-        self.kernel = np.ones((6, 6), np.float32) / 25  # definição do KERNEL/MÁSCARA
+        # definição do KERNEL/MÁSCARA
+        self.kernel = np.ones((6, 6), np.float32) / 25
 
     def print_pixels(self):
-        print("Altura: %d pixels" % (self.image.shape[0]))  # shape é um vetor --> índice p extrair o necessario
+        # shape é um vetor --> índice p extrair o necessario
+        print("Altura: %d pixels" % (self.image.shape[0]))
         print("Largura: %d pixels" % (self.image.shape[1]))
         # print("Canais: %d" % (self.img.shape[2]))
 
     def setKernel(self, altura, largura):
         self.kernel = np.ones((altura, largura), np.float32) / 25
 
-    def power(self,const, gama, offset = None):
+    def power(self, const, gama, offset=None):
         a = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
-        if offset == None:
+        if offset is None:
             x = const * (((a - a.min()) / (a.max() - a.min())) ** gama)
         else:
-            x = const * ((((a + offset)- a.min()) / (a.max() - a.min())) ** gama)
+            x = const * ((((a + offset) - a.min()) / (a.max() - a.min())) ** gama)
         x = np.array(((a.max() - a.min()) * x) + a.min(), dtype=np.uint8)
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(newfilename, x)
@@ -173,3 +175,4 @@ class Image:
 if __name__=="__main__":
     y = Image("./images/images_chapter_03/Fig3.35(a).jpg")
     y.media_filter(35)
+
