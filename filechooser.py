@@ -1,9 +1,10 @@
-import os
-
 from kivy.factory import Factory
 from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.popup import Popup
+
+import os
+
 
 
 class LoadDialog(FloatLayout):

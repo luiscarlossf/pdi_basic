@@ -2,6 +2,7 @@ from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 
 
+
 class StatusBar(BoxLayout):
     ui = ObjectProperty(None)
     label_right = ObjectProperty(None)

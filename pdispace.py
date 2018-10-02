@@ -1,3 +1,4 @@
+# File name: pdispace.py
 from os import path
 
 from kivy.properties import ObjectProperty
@@ -5,6 +6,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.image import Image
 from kivy.uix.tabbedpanel import TabbedPanelHeader
+
 
 
 class PdiSpace(BoxLayout):
@@ -32,9 +34,9 @@ class PdiSpace(BoxLayout):
         self.ui.processing_bar.set_histogram(filename)
 
 
+
 class PropertyGroup(BoxLayout):
     pass
-
 
 class PDIHeader(TabbedPanelHeader, Button):
     def __init__(self, ui=None, **kwargs):

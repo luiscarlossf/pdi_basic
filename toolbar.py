@@ -15,6 +15,7 @@ class ToolBar(BoxLayout):
     index_b_selected = int()
 
 
+
 class ButtonTool(ToggleButton):
     tool_bar = ObjectProperty(None)
 

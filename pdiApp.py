@@ -1,3 +1,4 @@
+# File name: pdiApp.py
 import kivy
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -6,11 +7,13 @@ from kivy.lang.builder import Builder
 
 kivy.require("1.10.0")
 Builder.load_file('properties.kv')
+kivy.require("1.10.0")
 
 
 class Pdi(BoxLayout):
     """
-     A classe Pdi define a estrutura e organização dos elementos da interface da aplicação
+     A classe Pdi define a estrutura e organização
+     dos elementos da interface da aplicação
     """
     menu_bar = ObjectProperty(None)
     tool_bar = ObjectProperty(None)
@@ -37,12 +40,13 @@ class Pdi(BoxLayout):
         self.pdi_space.set_source_image(filename)
 
 
+
 class PdiApp(App):
     """
       Classe principal da aplicação
     """
-    @staticmethod
-    def build():
+    
+    def build(self):
         return Pdi()
 
 

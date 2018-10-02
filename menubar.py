@@ -1,11 +1,14 @@
+
 import platform
 
 from cv2 import imwrite, imread
+
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 
 from filechooser import LoadDialog, SaveDialog
+
 
 
 class MenuBar(BoxLayout):
@@ -47,6 +50,3 @@ class MenuBar(BoxLayout):
 
     def dismiss_popup(self):
         self._popup.dismiss()
-
-
-

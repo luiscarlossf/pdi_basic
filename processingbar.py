@@ -7,6 +7,7 @@ from properties import DefaultProperties, TransformProperties, BitProperties, Hi
 from properties import DetectionProperties, FatColorProperties, FilterProperties
 
 
+
 class ProcessingBar(BoxLayout):
     ui = ObjectProperty(None)
     image_currant = str()
@@ -20,8 +21,10 @@ class ProcessingBar(BoxLayout):
         self.p[index].ui = self.ui
         self.add_widget(Label(text='Propriedades', size_hint=(1, 0.2)))
         self.add_widget(self.p[index])
-        self.add_widget(RevertButton(self.ui, self, text='Reverter', size_hint=(1, 0.3)))
-        self.add_widget(CloseButton(self.ui, text='Fechar Imagem', size_hint=(1, 0.3)))
+        self.add_widget(RevertButton(
+            self.ui, self, text='Reverter', size_hint=(1, 0.3)))
+        self.add_widget(CloseButton(
+            self.ui, text='Fechar Imagem', size_hint=(1, 0.3)))
         try:
             self.set_histogram(self.ui.pdi_space.get_image().source)
         except AttributeError:
@@ -43,6 +46,7 @@ class RevertButton(Button):
         self.ui.pdi_space.set_source_image(self.pb.image_currant)
         self.ui.pdi_space.get_image().reload()
         self.ui.processing_bar.set_histogram(self.pb.image_currant)
+
 
 
 class CloseButton(Button):

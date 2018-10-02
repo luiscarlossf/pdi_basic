@@ -2,18 +2,23 @@ import os
 
 import cv2
 import numpy as np
-from PIL import ImageFilter, Image
+from PIL import ImageFilter, Image as img
 from matplotlib import pyplot as plt
+
 
 
 class ImagePDI:
     def __init__(self, filename):
         self.image = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
         self.filename = filename
-        self.kernel = np.ones((6, 6), np.float32) / 25  # definição do KERNEL/MÁSCARA
+
+        # definição do KERNEL/MÁSCARA
+        self.kernel = np.ones((6, 6), np.float32) / 25
 
     def print_pixels(self):
-        print("Altura: %d pixels" % (self.image.shape[0]))  # shape é um vetor --> índice p extrair o necessario
+
+        # shape é um vetor --> índice p extrair o necessario
+        print("Altura: %d pixels" % (self.image.shape[0]))
         print("Largura: %d pixels" % (self.image.shape[1]))
 
     def set_kernel(self, altura, largura):
@@ -24,21 +29,22 @@ class ImagePDI:
         if offset is None:
             x = const * (((a - a.min()) / (a.max() - a.min())) ** gama)
         else:
-            x = const * ((((a + offset) - a.min()) / (a.max() - a.min())) ** gama)
+            x = const *\
+             ((((a + offset) - a.min()) / (a.max() - a.min())) ** gama)
         x = np.array(((a.max() - a.min()) * x) + a.min(), dtype=np.uint8)
-        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(new_file_name, x)
-        return new_file_name
+        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(newfilename, x)
+        return newfilename
 
     def min_filter(self, kernel):  # aplicar o filtro MINIMO
-        im = Image.open(self.filename)
+        im = img.open(self.filename)
         image = im.filter(ImageFilter.MinFilter(kernel))
         new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
         image.save(new_file_name)
         return new_file_name
 
     def max_filter(self, kernel):  # aplicar o filtro MAXIMO
-        im = Image.open(self.filename)
+        im = img.open(self.filename)
         image = im.filter(ImageFilter.MaxFilter(kernel))
         new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
         image.save(new_file_name)
@@ -59,7 +65,7 @@ class ImagePDI:
         cv2.imwrite(new_file_name, median_blur)
         return new_file_name
 
-    def filter2d(self, ddepth = -1):  # CONVOLUÇÃO DISCRETA 2D
+    def filter2d(self, ddepth=-1):  # CONVOLUÇÃO DISCRETA 2D
         # toma como base a imagem e o valor definido no KERNEL
         image = cv2.imread(self.filename)
         cv2.filter2D(image, ddepth, self.kernel)
@@ -100,8 +106,10 @@ class ImagePDI:
         im = cv2.imread(self.filename)
         imgray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
         ret, thresh = cv2.threshold(imgray, 127, 255, 0)
-        im_o, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        # contours --> é uma lista em Python de todos os contornos da imagem (contorno = matriz)
+        im_o, contours, hierarchy =\
+            cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        # contours --> é uma lista em Python de todos os contornos da imagem
+        # (contorno = matriz)
         # Desenhando os CONTORNOS na Imagem:
         img_cont = cv2.drawContours(im, contours, -1, (0, 255, 0), 3)
         new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
@@ -123,7 +131,8 @@ class ImagePDI:
         # cv2.imwrite("D:\imagem_bordasCanny.jpg", result) SALVAR A IMAGEM
 
     def equalize(self):
-        # EQUALIZAÇÃO DO HISTOGRAMA --> "esticar" o hist, evitar que fique concentrado apenas em um ponto alto
+        # EQUALIZAÇÃO DO HISTOGRAMA --> "esticar" o hist,
+        # evitar que fique concentrado apenas em um ponto alto
         # Melhorar o contraste da imagem --> aumentar detalhes
         plt.gcf().clear()
         equa = cv2.equalizeHist(src=self.image)
@@ -138,13 +147,16 @@ class ImagePDI:
         cv2.imwrite(new_file_name, equa)
         plt.savefig("./images/temporarias/histogram.jpg")
         return new_file_name
-        # res = np.hstack((img, equa))  # colocar imagem original e equa lado a lado
+        # res = np.hstack((img, equa)) #colocar imagem original e equa lado a lado
         # cv2.imwrite("D:\imagem_equalizada.jpg", res)
 
     def fatiamento(self, plane):
         a = self.image
         # = np.array([[1, 2,3,4],[5,6,7,8]], dtype=np.uint8)
-        p = np.array([[int(np.binary_repr(a[i][j], 8)[8 - plane]) * 255 for j in range(0, a.shape[1])] for i in range(0, a.shape[0])])
+        p = np.array(
+                     [[int(np.binary_repr(a[i][j], 8)[8 - plane]) * 255
+                       for j in range(0, a.shape[1])]
+                      for i in range(0, a.shape[0])])
         cv2.imwrite("./images/temporarias/"+str(plane)+".jpg", p)
         return "./images/temporarias/"+str(plane)+".jpg"
 

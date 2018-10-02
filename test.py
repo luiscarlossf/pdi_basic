@@ -7,6 +7,7 @@ from kivy.uix.image import Image
 from image_pdi import ImagePDI as PI
 
 
+
 class TestApp(App):
     @staticmethod
     def build():
@@ -26,7 +27,6 @@ def binary():
             print(num_bin[8-i:])
 
     a = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]], dtype='uint8')
-
     p = np.unpackbits(a)
     for i in p:
         print(i)
@@ -39,7 +39,6 @@ def get_number(num, level):
     num_text = num_text[tamanho-level:tamanho+1]
     print(num_text)
 
-
 def bit(const, gama):
     a = cv.imread("./images/images_chapter_03/Fig3.08(a).jpg", cv.IMREAD_GRAYSCALE)
     x = const * (((a-a.min())/(a.max() - a.min())) ** gama)
@@ -48,7 +47,8 @@ def bit(const, gama):
 
 
 def fatiamento(list):
-    a = cv.imread("./images/images_chapter_03/Fig3.08(a).jpg", cv.IMREAD_GRAYSCALE)
+    a = cv.imread(
+        "./images/images_chapter_03/Fig3.08(a).jpg", cv.IMREAD_GRAYSCALE)
     rows, cols = a.shape
     for i in range(0, rows):
         for j in range(0, cols):
@@ -64,4 +64,3 @@ def fatiamento(list):
 
 if __name__ == '__main__':
     fatiamento(['0,50, 0'])
-

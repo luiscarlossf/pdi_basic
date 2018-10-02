@@ -1,8 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
-from kivy.uix.colorpicker import ColorPicker, ColorWheel
+from kivy.uix.colorpicker import ColorWheel  # , ColorPicker  # Unused
 from kivy.uix.dropdown import DropDown
-
 from image_pdi import ImagePDI
 
 
