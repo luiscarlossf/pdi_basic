@@ -1,10 +1,9 @@
-from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
-from kivy.uix.colorpicker import ColorPicker, ColorWheel
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.colorpicker import ColorWheel
 from kivy.uix.dropdown import DropDown
 
 from image_pdi import Image as PI
-
 
 
 class TransformProperties(BoxLayout):
@@ -30,6 +29,7 @@ class TransformProperties(BoxLayout):
             newfilename = ip.power(int(self.consttextinput.text), float(self.gamatextinput.text))
         img.source = newfilename
         img.reload()
+
 
 class BitProperties(BoxLayout):
     um = ObjectProperty(None)
@@ -85,7 +85,6 @@ class HistogramProperties(BoxLayout):
         self.ui = ui
         super(HistogramProperties, self).__init__(**kwargs)
 
-
     def setHistogram(self, filename):
         try:
             newfilename = PI(filename=filename).histogram()
@@ -94,7 +93,6 @@ class HistogramProperties(BoxLayout):
         except AttributeError:
             self.hist.source = " "
             self.hist.reload()
-
 
     def get_gcf(self, source):
         plt = PI(filename=source).histogram()
@@ -118,6 +116,7 @@ class FilterProperties(BoxLayout):
     max = ObjectProperty(None)
     min = ObjectProperty(None)
     first = 1
+
     def __init__(self, ui=None, **kwargs):
         self.ui = ui
         super(FilterProperties, self).__init__(**kwargs)
@@ -156,6 +155,7 @@ class DetectionProperties(BoxLayout):
         img.source = new
         img.reload()
 
+
 class FatColorProperties(BoxLayout):
     colorwheel = ObjectProperty(None)
     corinput = ObjectProperty(None)
@@ -173,19 +173,23 @@ class FatColorProperties(BoxLayout):
         img.source = new
         img.reload()
 
+
 class DefaultProperties(BoxLayout):
     def __init__(self, ui=None, **kwargs):
         self.ui = ui
         super(DefaultProperties, self).__init__(**kwargs)
 
+
 class CustomDropDown(DropDown):
     pass
+
 
 class ColorP(ColorWheel):
     cor = ""
     fat = ObjectProperty(None)
+
     def __init__(self, **kwargs):
-        self.bind(color= self.on_color)
+        self.bind(color=self.on_color)
         super(ColorP, self).__init__(**kwargs)
 
     def on_color(self, instance, value):
