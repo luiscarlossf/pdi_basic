@@ -1,9 +1,8 @@
-from kivy.app import App
+# from kivy.app import App  # Unused
 from kivy.uix.floatlayout import FloatLayout
 from kivy.factory import Factory
 from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
-
 import os
 
 
