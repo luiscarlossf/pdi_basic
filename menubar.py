@@ -9,6 +9,7 @@ import platform
 
 import os
 
+
 class MenuBar(BoxLayout):
     ui = ObjectProperty(None)
     openbutton = ObjectProperty(None)
@@ -46,6 +47,3 @@ class MenuBar(BoxLayout):
 
     def dismiss_popup(self):
         self._popup.dismiss()
-
-
-
