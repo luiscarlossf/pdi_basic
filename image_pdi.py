@@ -1,8 +1,9 @@
-import cv2
-from matplotlib import pyplot as plt
-import numpy as np
 import os
+
+import cv2
+import numpy as np
 from PIL import ImageFilter, Image
+from matplotlib import pyplot as plt
 
 
 class Image:
@@ -17,20 +18,19 @@ class Image:
         print("Largura: %d pixels" % (self.image.shape[1]))
         # print("Canais: %d" % (self.img.shape[2]))
 
-    def setKernel(self, altura, largura):
+    def set_kernel(self, altura, largura):
         self.kernel = np.ones((altura, largura), np.float32) / 25
 
-    def power(self,const, gama, offset = None):
+    def power(self, const, gama, offset=None):
         a = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
-        if offset == None:
+        if offset is None:
             x = const * (((a - a.min()) / (a.max() - a.min())) ** gama)
         else:
-            x = const * ((((a + offset)- a.min()) / (a.max() - a.min())) ** gama)
+            x = const * ((((a + offset) - a.min()) / (a.max() - a.min())) ** gama)
         x = np.array(((a.max() - a.min()) * x) + a.min(), dtype=np.uint8)
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(newfilename, x)
         return newfilename
-
 
     def min_filter(self, kernel):  # aplicar o filtro MINIMO
         im = Image.open(self.filename)
@@ -47,25 +47,25 @@ class Image:
         return newfilename
 
     def media_filter(self, size):  # aplicar o filtro da MÉDIA
-        blur = cv2.blur(self.image,(size, size))
+        blur = cv2.blur(self.image, (size, size))
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(newfilename, blur)
         return newfilename
 
     def median_filter(self, size):  # aplicar o filtro da MEDIANA
         # elimina eficientemento o ruído (sal e pimenta)
-        if(size%2 == 0):
+        if (size % 2 == 0):
             size += 1
-        medianBlur = cv2.medianBlur(self.image, size)
+        median_blur = cv2.medianBlur(self.image, size)
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(newfilename, medianBlur)
+        cv2.imwrite(newfilename, median_blur)
         return newfilename
 
-    def filter2d(self, ddepth = -1):  # CONVOLUÇÃO DISCRETA 2D
+    def filter2d(self, ddepth=-1):  # CONVOLUÇÃO DISCRETA 2D
         # toma como base a imagem e o valor definido no KERNEL
         image = cv2.imread(self.filename)
         cv2.filter2D(image, ddepth, self.kernel)
-        newfilename = "./images/temporarias/"+os.path.basename(self.filename)
+        newfilename = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(newfilename, image)
         return newfilename
 
@@ -128,8 +128,8 @@ class Image:
         # EQUALIZAÇÃO DO HISTOGRAMA --> "esticar" o hist, evitar que fique concentrado apenas em um ponto alto
         # Melhorar o contraste da imagem --> aumentar detalhes
         plt.gcf().clear()
-       # self.image = cv2.imread(self.filename, 0)
-        #self.image = cv2.cvtColor(self.image, cv2.COLOR_RGB2GRAY)
+        # self.image = cv2.imread(self.filename, 0)
+        # self.image = cv2.cvtColor(self.image, cv2.COLOR_RGB2GRAY)
         equa = cv2.equalizeHist(src=self.image)
         cv2.calcHist(equa, [0], None, [256], [0, 256])
         plt.hist(equa.ravel(), 256, [0, 256])
@@ -144,12 +144,14 @@ class Image:
         return newfilename
         # res = np.hstack((img, equa))  # colocar imagem original e equa lado a lado
         # cv2.imwrite("D:\imagem_equalizada.jpg", res)
+
     def fatiamento(self, plane):
         a = self.image
         # = np.array([[1, 2,3,4],[5,6,7,8]], dtype=np.uint8)
-        p = np.array([[int(np.binary_repr(a[i][j], 8)[8 - plane]) * 255 for j in range(0, a.shape[1])] for i in range(0, a.shape[0])])
-        cv2.imwrite("./images/temporarias/"+str(plane)+".jpg", p)
-        return "./images/temporarias/"+str(plane)+".jpg"
+        p = np.array([[int(np.binary_repr(a[i][j], 8)[8 - plane]) * 255 for j in range(0, a.shape[1])] for i in
+                      range(0, a.shape[0])])
+        cv2.imwrite("./images/temporarias/" + str(plane) + ".jpg", p)
+        return "./images/temporarias/" + str(plane) + ".jpg"
 
     def colorful(self, st):
         st = st.replace(" ", "")
@@ -170,6 +172,7 @@ class Image:
         cv2.imwrite(newfilename, a)
         return newfilename
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     y = Image("./images/images_chapter_03/Fig3.35(a).jpg")
     y.media_filter(35)

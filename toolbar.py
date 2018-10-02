@@ -1,7 +1,7 @@
-
-from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.togglebutton import ToggleButton
+
 
 class ToolBar(BoxLayout):
     ui = ObjectProperty(None)
@@ -14,13 +14,14 @@ class ToolBar(BoxLayout):
 
     indexbselected = int()
 
+
 class ButtonTool(ToggleButton):
     toolbar = ObjectProperty(None)
 
     def set_index(self):
         if self.state == 'down':
             index = self.get_index(self)
-            self.toolbar.ui.processingbar.addProperties(index)
+            self.toolbar.ui.processingbar.add_properties(index)
             self.toolbar.indexbselected = index
 
     def get_index(self, widget):
