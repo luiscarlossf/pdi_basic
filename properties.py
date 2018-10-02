@@ -19,9 +19,9 @@ class TransformProperties(BoxLayout):
         super(TransformProperties, self).__init__(**kwargs)
 
     def on_press(self):
-        img = self.ui.pdispace.getImage()
+        img = self.ui.pdispace.get_image()
         self.ui.processingbar.image_currant = str(img.source)
-        ip = PI(filename=self.ui.getSourceImage())
+        ip = PI(filename=self.ui.get_source_image())
         try:
             offset = float(self.offsettextinput.text)
             newfilename = ip.power(int(self.consttextinput.text), float(self.gamatextinput.text), offset)
@@ -47,33 +47,33 @@ class BitProperties(BoxLayout):
         super(BitProperties, self).__init__(**kwargs)
 
     def show_planes(self):
-        img = self.ui.pdispace.getImage()
+        img = self.ui.pdispace.get_image()
         source = str(img.source)
         self.ui.processingbar.image_currant = source
         if self.um.active:
             new = PI(filename=source).fatiamento(1)
-            self.ui.pdispace.addImage(new)
+            self.ui.pdispace.add_image(new)
         if self.dois.active:
             new = PI(filename=source).fatiamento(2)
-            self.ui.pdispace.addImage(new)
+            self.ui.pdispace.add_image(new)
         if self.tres.active:
             new = PI(filename=source).fatiamento(3)
-            self.ui.pdispace.addImage(new)
+            self.ui.pdispace.add_image(new)
         if self.quatro.active:
             new = PI(filename=source).fatiamento(4)
-            self.ui.pdispace.addImage(new)
+            self.ui.pdispace.add_image(new)
         if self.cinco.active:
             new = PI(filename=source).fatiamento(5)
-            self.ui.pdispace.addImage(new)
+            self.ui.pdispace.add_image(new)
         if self.seis.active:
             new = PI(filename=source).fatiamento(6)
-            self.ui.pdispace.addImage(new)
+            self.ui.pdispace.add_image(new)
         if self.sete.active:
             new = PI(filename=source).fatiamento(7)
-            self.ui.pdispace.addImage(new)
+            self.ui.pdispace.add_image(new)
         if self.oito.active:
             new = PI(filename=source).fatiamento(8)
-            self.ui.pdispace.addImage(new)
+            self.ui.pdispace.add_image(new)
 
 
 class HistogramProperties(BoxLayout):
@@ -85,7 +85,7 @@ class HistogramProperties(BoxLayout):
         self.ui = ui
         super(HistogramProperties, self).__init__(**kwargs)
 
-    def setHistogram(self, filename):
+    def set_histogram(self, filename):
         try:
             newfilename = PI(filename=filename).histogram()
             self.hist.source = newfilename
@@ -100,7 +100,7 @@ class HistogramProperties(BoxLayout):
 
     def equalizar(self):
         if self.ui.pdispace.panelimages.content != 'None':
-            img = self.ui.pdispace.getImage()
+            img = self.ui.pdispace.get_image()
             source = str(img.source)
             self.ui.processingbar.image_currant = source
             new = PI(filename=source).equalize()
@@ -123,7 +123,7 @@ class FilterProperties(BoxLayout):
 
     def on_press(self):
 
-        img = self.ui.pdispace.getImage()
+        img = self.ui.pdispace.get_image()
         source = str(img.source)
         self.ui.processingbar.image_currant = source
         if self.mediana.active:
@@ -148,7 +148,7 @@ class DetectionProperties(BoxLayout):
         super(DetectionProperties, self).__init__(**kwargs)
 
     def detectar(self):
-        img = self.ui.pdispace.getImage()
+        img = self.ui.pdispace.get_image()
         source = str(img.source)
         self.ui.processingbar.image_currant = source
         new = PI(source).contours_canny()
@@ -166,7 +166,7 @@ class FatColorProperties(BoxLayout):
         super(FatColorProperties, self).__init__(**kwargs)
 
     def fatia(self):
-        img = self.ui.pdispace.getImage()
+        img = self.ui.pdispace.get_image()
         source = str(img.source)
         self.ui.processingbar.image_currant = source
         new = PI(source).colorful(self.slices.text)

@@ -18,7 +18,7 @@ class Image:
         print("Largura: %d pixels" % (self.image.shape[1]))
         # print("Canais: %d" % (self.img.shape[2]))
 
-    def setKernel(self, altura, largura):
+    def set_kernel(self, altura, largura):
         self.kernel = np.ones((altura, largura), np.float32) / 25
 
     def power(self, const, gama, offset=None):
@@ -56,9 +56,9 @@ class Image:
         # elimina eficientemento o ruído (sal e pimenta)
         if (size % 2 == 0):
             size += 1
-        medianBlur = cv2.medianBlur(self.image, size)
+        median_blur = cv2.medianBlur(self.image, size)
         newfilename = "./images/temporarias/" + os.path.basename(self.filename)
-        cv2.imwrite(newfilename, medianBlur)
+        cv2.imwrite(newfilename, median_blur)
         return newfilename
 
     def filter2d(self, ddepth=-1):  # CONVOLUÇÃO DISCRETA 2D

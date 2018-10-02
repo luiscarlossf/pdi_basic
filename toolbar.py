@@ -21,7 +21,7 @@ class ButtonTool(ToggleButton):
     def set_index(self):
         if self.state == 'down':
             index = self.get_index(self)
-            self.toolbar.ui.processingbar.addProperties(index)
+            self.toolbar.ui.processingbar.add_properties(index)
             self.toolbar.indexbselected = index
 
     def get_index(self, widget):
