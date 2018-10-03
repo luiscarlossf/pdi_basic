@@ -10,7 +10,7 @@ class ToolBar(BoxLayout):
     hist_button = ObjectProperty(None)
     filter_button = ObjectProperty(None)
     det_button = ObjectProperty(None)
-    fatb_utton = ObjectProperty(None)
+    fat_button = ObjectProperty(None)
 
     index_b_selected = int()
 
