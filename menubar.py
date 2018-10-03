@@ -12,10 +12,10 @@ from filechooser import LoadDialog, SaveDialog
 
 
 class MenuBar(BoxLayout):
+    ui = ObjectProperty(None)
+    open_button = ObjectProperty(None)
+    button = ObjectProperty(None)
     def __init__(self):
-        self.ui = ObjectProperty(None)
-        self.open_button = ObjectProperty(None)
-        self.save_button = ObjectProperty(None)
         self.last_file_names = list()
         self.last_path = str()
         self._popup = None
