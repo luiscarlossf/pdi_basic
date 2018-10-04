@@ -101,11 +101,13 @@ def noisy(noise_typ,image):
               for i in image.shape]
       out[coords] = 0
       return out
+
    elif noise_typ == "poisson":
       vals = len(np.unique(image))
       vals = 2 ** np.ceil(np.log2(vals))
       noisy = np.random.poisson(image * vals) / float(vals)
       return noisy
+
    elif noise_typ =="speckle":
       row,col,ch = image.shape
       gauss = np.random.randn(row,col,ch)
