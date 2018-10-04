@@ -84,6 +84,7 @@ def noisy(noise_typ,image):
       gauss = gauss.reshape(row,col,ch)
       noisy = image + gauss
       return noisy
+
    elif noise_typ == "s&p":
       row,col,ch = image.shape
       s_vs_p = 0.5
