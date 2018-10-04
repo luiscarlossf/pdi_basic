@@ -170,6 +170,18 @@ class Image:
         cv2.imwrite(newfilename, a)
         return newfilename
 
+    def gaussian_noise(self):
+        pass
+
+    def impulsive_noise(self):
+        pass
+
+    def geometric_filter(self):
+        pass
+
+    def trimmed_filter(self):
+        pass
+
 if __name__=="__main__":
     y = Image("./images/images_chapter_03/Fig3.35(a).jpg")
     y.media_filter(35)
