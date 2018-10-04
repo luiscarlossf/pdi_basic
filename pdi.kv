@@ -14,19 +14,19 @@
 
 <Pdi>:
     id: _ui
-    menubar: _menubar
-    toolbar: _toolbar
-    pdispace: _pdispaceTool
-    processingbar: _processingbar
-    statusbar: _statusbar
+    menu_bar: _menubar
+    tool_bar: _toolbar
+    pdi_space: _pdispaceTool
+    processing_bar: _processingbar
+    status_bar: _statusbar
 
     orientation: 'vertical'
 #MENUBAR
     MenuBar:
         id: _menubar
         ui: root
-        openbutton: _openButton
-        savebutton: _saveButton
+        open_button: _openButton
+        save_button: _saveButton
         size_hint: 1, None
         height: 24
         MenuButton:
@@ -42,12 +42,12 @@
     ToolBar:
         id: _toolbar
         ui: root
-        transbutton: _transbutton
-        bitbutton: _bitbutton
-        histbutton: _histbutton
-        filterbutton: _filterbutton
-        detbutton: _detbutton
-        fatbutton: _fatbutton
+        trans_button: _transbutton
+        bit_button: _bitbutton
+        hist_button: _histbutton
+        filter_button: _filterbutton
+        det_button: _detbutton
+        fat_button: _fatbutton
 
         orientation: 'horizontal'
         size_hint: 1, None
@@ -116,7 +116,7 @@
     PdiSpace:
         id: _pdispaceTool
         ui: root
-        panelimages: _panelImages
+        panel_images: _panelImages
 
         TabbedPanel:
             id: _panelImages
@@ -130,29 +130,29 @@
                     size: self.size
 
 #PROCESSING BAR
-        ProcessingBar:
-            id: _processingbar
-            ui: root
-            orientation: 'vertical'
-            size_hint: None, 1
-            width: 320
+    ProcessingBar:
+        id: _processingbar
+        ui: root
+        orientation: 'vertical'
+        size_hint: None, 1
+        width: 320
 
-            canvas:
-                Color:
-                    rgba: .1,.1,.1,1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+        canvas:
+            Color:
+                rgba: .1,.1,.1,1
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
-            Label:
-                text: 'Propriedades'
+        Label:
+            text: 'Propriedades'
 
 #STATUS BAR
     StatusBar:
         id: _statusbar
         ui: root
-        labelright: _labelright
-        labelleft: _labelleft
+        label_right: _labelright
+        label_left: _labelleft
 
         orientation: 'horizontal'
         size_hint: 1, None
@@ -226,10 +226,10 @@
                 on_release: root.save(filechooser.path, text_input.text)
 
 <TransformProperties>:
-    consttextinput: _constTextInput
-    gamatextinput: _gamaTextInput
-    offsettextinput: _offsetTextInput
-    transformbutton: _transformButton
+    const_text_input: _constTextInput
+    gama_text_input: _gamaTextInput
+    offset_text_input: _offsetTextInput
+    transform_button: _transformButton
     id: _transform
 
     orientation: 'vertical'
