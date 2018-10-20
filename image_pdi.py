@@ -181,9 +181,20 @@ class ImagePDI:
         cv2.imwrite(new_file_name, a)
         return new_file_name
 
+    def gaussian_noise(self):
+        pass
 
-if __name__ == "__main__":
-    y = Image("./images/images_chapter_03/Fig3.35(a).jpg")
+    def impulsive_noise(self):
+        pass
+
+    def geometric_filter(self):
+        pass
+
+    def trimmed_filter(self):
+        pass
+
+if __name__=="__main__":
+    y = ImagePDI("./images/images_chapter_03/Fig3.35(a).jpg")
     y.media_filter(35)
 
 

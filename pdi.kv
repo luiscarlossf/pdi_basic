@@ -204,7 +204,7 @@
         orientation: "vertical"
         FileChooserIconView:
             id: filechooser
-            filters: ['*.png', '*.jpg', '*.jpeg','*.bmp']
+            filters: ['*.png', '*.jpg', '*.jpeg','*.bmp', '*.JPG', "*.JPEG", "*.tif"]
             path: './'
             on_selection: text_input.text = self.selection and self.selection[0] or ''
 
