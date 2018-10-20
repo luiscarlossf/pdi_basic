@@ -51,28 +51,28 @@ class BitProperties(BoxLayout):
         self.ui.processing_bar.image_currant = source
         if self.um.active:
             new = ImagePDI(filename=source).fatiamento(1)
-            self.ui.pdispace.add_image(new)
+            self.ui.pdi_space.add_image(new)
         if self.dois.active:
             new = ImagePDI(filename=source).fatiamento(2)
-            self.ui.pdispace.add_image(new)
+            self.ui.pdi_space.add_image(new)
         if self.tres.active:
             new = ImagePDI(filename=source).fatiamento(3)
-            self.ui.pdispace.add_image(new)
+            self.ui.pdi_space.add_image(new)
         if self.quatro.active:
             new = ImagePDI(filename=source).fatiamento(4)
-            self.ui.pdispace.add_image(new)
+            self.ui.pdi_space.add_image(new)
         if self.cinco.active:
             new = ImagePDI(filename=source).fatiamento(5)
-            self.ui.pdispace.add_image(new)
+            self.ui.pdi_space.add_image(new)
         if self.seis.active:
             new = ImagePDI(filename=source).fatiamento(6)
-            self.ui.pdispace.add_image(new)
+            self.ui.pdi_space.add_image(new)
         if self.sete.active:
             new = ImagePDI(filename=source).fatiamento(7)
-            self.ui.pdispace.add_image(new)
+            self.ui.pdi_space.add_image(new)
         if self.oito.active:
             new = ImagePDI(filename=source).fatiamento(8)
-            self.ui.pdispace.add_image(new)
+            self.ui.pdi_space.add_image(new)
 
 
 class HistogramProperties(BoxLayout):
@@ -84,13 +84,13 @@ class HistogramProperties(BoxLayout):
         self.ui = ui
         super(HistogramProperties, self).__init__(**kwargs)
 
-    def setHistogram(self, filename):
+    def set_histogram(self, filename):
         try:
             new_file_name = ImagePDI(filename=filename).histogram()
             self.hist.source = new_file_name
             self.hist.reload()
         except AttributeError:
-            self.hist.source = " "
+            self.hist.source = ' '
             self.hist.reload()
 
     def get_gcf(self, source):
@@ -99,9 +99,9 @@ class HistogramProperties(BoxLayout):
 
     def equalizar(self):
         if self.ui.pdi_space.panel_images.content != 'None':
-            img = self.ui.pdispace.get_image()
+            img = self.ui.pdi_space.get_image()
             source = str(img.source)
-            self.ui.processingbar.image_currant = source
+            self.ui.processing_bar.image_currant = source
             new = ImagePDI(filename=source).equalize()
             img.source = new
             img.reload()
