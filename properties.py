@@ -193,4 +193,4 @@ class ColorP(ColorWheel):
 
     def on_color(self, instance, value):
         self.cor = str(value)
-        self.fat.corinput.text = str(value)
+        self.fat.cor_input.text = str(value)

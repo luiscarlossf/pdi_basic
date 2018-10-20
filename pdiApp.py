@@ -7,7 +7,6 @@ from kivy.lang.builder import Builder
 
 kivy.require("1.10.0")
 Builder.load_file('properties.kv')
-kivy.require("1.10.0")
 
 
 class Pdi(BoxLayout):

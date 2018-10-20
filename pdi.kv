@@ -130,22 +130,22 @@
                     size: self.size
 
 #PROCESSING BAR
-    ProcessingBar:
-        id: _processingbar
-        ui: root
-        orientation: 'vertical'
-        size_hint: None, 1
-        width: 320
+        ProcessingBar:
+            id: _processingbar
+            ui: root
+            orientation: 'vertical'
+            size_hint: None, 1
+            width: 320
 
-        canvas:
-            Color:
-                rgba: .1,.1,.1,1
-            Rectangle:
-                pos: self.pos
-                size: self.size
+            canvas:
+                Color:
+                    rgba: .1,.1,.1,1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
 
-        Label:
-            text: 'Propriedades'
+            Label:
+                text: 'Propriedades'
 
 #STATUS BAR
     StatusBar:
