@@ -204,7 +204,7 @@
         orientation: "vertical"
         FileChooserIconView:
             id: filechooser
-            filters: ['*.png', '*.jpg', '*.jpeg','*.bmp', '*.JPG', "*.JPEG", "*.tif"]
+            filters: ['*.png', '*.jpg', '*.jpeg','*.bmp', '*.JPG', '*.JPEG', '*.tif']
             path: './'
             on_selection: text_input.text = self.selection and self.selection[0] or ''
 
@@ -224,72 +224,3 @@
             Button:
                 text: "Save"
                 on_release: root.save(filechooser.path, text_input.text)
-
-<TransformProperties>:
-    const_text_input: _constTextInput
-    gama_text_input: _gamaTextInput
-    offset_text_input: _offsetTextInput
-    transform_button: _transformButton
-    id: _transform
-
-    orientation: 'vertical'
-    padding: 10
-    BoxLayout:
-        orientation:'horizontal'
-        padding: 10, 6, 6, 5
-        size_hint: (1, None)
-        height: 50
-
-        Label:
-            id: _constlabel
-            text: 'Constante: '
-            size_hint: (0.3, 1)
-            font_size: '14sp'
-        TextInput:
-            id: _constTextInput
-            size_hint: (0.7, 1)
-            background_color: [0.3,0.3,0.3,1]
-            foreground_color: [0.9,0.9,0.9,1]
-    BoxLayout:
-        orientation:'horizontal'
-        padding: 10, 6, 6, 5
-        size_hint: (1, None)
-        height: 50
-        Label:
-            id: _gamaLabel
-            text: 'Gama: '
-            size_hint: (0.3, 1)
-            font_size: '14sp'
-        TextInput:
-            id: _gamaTextInput
-            size_hint: (0.7, 1)
-            background_color: [0.3,0.3,0.3,1]
-            foreground_color: [0.9,0.9,0.9,1]
-    BoxLayout:
-        orientation:'horizontal'
-        padding: 10, 6, 6, 5
-        size_hint: (1, None)
-        height: 50
-
-        Label:
-            id: _offsetLabel
-            text: 'Offset: '
-            size_hint: (0.3, 1)
-            font_size: '14sp'
-        TextInput:
-            id: _offsetTextInput
-            size_hint: (0.7, 1)
-            background_color: [0.3,0.3,0.3,1]
-            foreground_color: [0.9,0.9,0.9,1]
-    BoxLayout:
-        orientation:'horizontal'
-        padding: 10, 6, 6, 5
-        size_hint: (1, None)
-        height: 50
-
-        Button:
-            id: _transformButton
-            size_hint:(1, None)
-            height: 40
-            text: 'Aplicar Transformação de Potência'
-            on_press: _transform.on_press()
