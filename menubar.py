@@ -15,10 +15,11 @@ class MenuBar(BoxLayout):
     ui = ObjectProperty(None)
     open_button = ObjectProperty(None)
     button = ObjectProperty(None)
-    def __init__(self):
+    def __init__(self, **kwargs):
         self.last_file_names = list()
         self.last_path = str()
         self._popup = None
+        super(MenuBar, self).__init__(**kwargs)
 
     def show_load(self):
         print(self.ui)
