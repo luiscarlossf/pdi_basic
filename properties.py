@@ -114,6 +114,8 @@ class FilterProperties(BoxLayout):
     media = ObjectProperty(None)
     max = ObjectProperty(None)
     min = ObjectProperty(None)
+    geometric = ObjectProperty(None)
+    alfa = ObjectProperty(None)
     first = 1
 
     def __init__(self, ui=None, **kwargs):
@@ -137,6 +139,12 @@ class FilterProperties(BoxLayout):
         elif self.min.active:
             print("Min")
             new = ImagePDI(source).media_filter(int(self.kernel_text_input.text))
+        elif self.geometric.active:
+            print("Geometric")
+            #Função
+        elif self.alfa.active:
+            print("Alfa Cortada")
+
         img.source = new
         img.reload()
 

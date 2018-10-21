@@ -156,6 +156,8 @@
     media: _media
     max: _max
     min: _min
+    geometric: _geometric
+    alfa: _alfa
     BoxLayout:
         orientation: 'vertical'
         GridLayout:
@@ -184,6 +186,18 @@
             Label:
                 halign: 'left'
                 text:  'Mediana'
+            CheckBox:
+                id: _geometric
+                group: 'filter'
+            Label:
+                halign: 'left'
+                text:  'Média Geométrica'
+            CheckBox:
+                id: _alfa
+                group: 'filter'
+            Label:
+                halign: 'left'
+                text:  'Média Alfa Cortada'
 
         Label:
             text: 'Kernel: (entrada, entrada)'
