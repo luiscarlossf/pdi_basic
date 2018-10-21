@@ -203,3 +203,27 @@ class ColorP(ColorWheel):
     def on_color(self, instance, value):
         self.cor = str(value)
         self.fat.cor_input.text = str(value)
+
+class NoiseProperties(BoxLayout):
+    text_input_kernel = ObjectProperty(None)
+    gaussian = ObjectProperty(None)
+    pepper_salt = ObjectProperty(None)
+
+    def __init__(self, ui=None, **kwargs):
+        self.ui = ui
+        super(NoiseProperties, self).__init__(**kwargs)
+
+    def on_press(self):
+        img = self.ui.pdi_space.get_image()
+        source = str(img.source)
+        self.ui.processing_bar.image_currant = source
+        new = None
+        if self.gaussian.active:
+            print("Gaussian Noise")
+            new = ImagePDI(source).gaussian_noise()
+        elif self.pepper_salt.active:
+            print("Pepper and Salt Noise")
+            new = ImagePDI(source).pepper_salt_noise()
+        img.source = new
+        img.reload()
+

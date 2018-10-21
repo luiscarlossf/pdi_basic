@@ -190,13 +190,7 @@ class ImagePDI:
     def gaussian_noise(self):
         pass
 
-    def impulsive_noise(self):
-        pass
-
-    def geometric_filter(self):
-        pass
-
-    def trimmed_filter(self):
+    def pepper_salt_noise(self):
         pass
 
 if __name__=="__main__":

@@ -38,3 +38,5 @@ class ButtonTool(ToggleButton):
             return 5
         elif self.toolbar.fat_button == widget:
             return 6
+        elif self.toolbar.noise_button == widget:
+            return 7

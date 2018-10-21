@@ -237,3 +237,37 @@
         height: 50
         text: 'Aplicar Fatiamento'
         on_press: _fat.fatia()
+
+<NoiseProperties>:
+    id:_noise
+    text_input_kernel: _kernel
+    gaussian: _gaussian
+    pepper_salt: _pepper_salt
+
+    BoxLayout:
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            CheckBox:
+                id: _gaussian
+                group: 'filter'
+            Label:
+                halign: 'left'
+                text:  'Gaussiano'
+            CheckBox:
+                id: _pepper_salt
+                group: 'filter'
+            Label:
+                halign: 'left'
+                text:  'Sal e pimenta'
+
+        Label:
+            text: 'Kernel: (entrada, entrada)'
+        TextInput:
+            id: _kernel
+            size_hint: (1, None)
+            height: 90
+
+        Button:
+            text: 'Aplicar Filtro'
+            on_press: _noise.on_press()

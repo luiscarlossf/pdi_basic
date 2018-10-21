@@ -4,7 +4,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 
 from properties import DefaultProperties, TransformProperties, BitProperties, HistogramProperties
-from properties import DetectionProperties, FatColorProperties, FilterProperties
+from properties import DetectionProperties, FatColorProperties, FilterProperties, NoiseProperties
 
 
 
@@ -13,7 +13,7 @@ class ProcessingBar(BoxLayout):
     image_currant = str()
     index = -1
     p = [DefaultProperties(), TransformProperties(ui=ui), BitProperties(), HistogramProperties(ui=ui),
-         FilterProperties(), DetectionProperties(), FatColorProperties()]
+         FilterProperties(), DetectionProperties(), FatColorProperties(), NoiseProperties()]
 
     def add_properties(self, index):
         self.index = index
