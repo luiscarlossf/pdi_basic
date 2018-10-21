@@ -63,6 +63,12 @@ class ImagePDI:
         cv2.imwrite(new_file_name, median_blur)
         return new_file_name
 
+    def geometric_filter(self, kernel):
+        pass
+
+    def alpha_filter(self, kernel):
+        pass
+
     def filter2d(self, ddepth=-1):  # CONVOLUÇÃO DISCRETA 2D
         # toma como base a imagem e o valor definido no KERNEL
         image = cv2.imread(self.filename)

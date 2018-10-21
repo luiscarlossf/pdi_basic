@@ -141,9 +141,10 @@ class FilterProperties(BoxLayout):
             new = ImagePDI(source).media_filter(int(self.kernel_text_input.text))
         elif self.geometric.active:
             print("Geometric")
-            #Função
+            new = ImagePDI(source).geometric_filter(int(self.kernel_text_input.text))
         elif self.alfa.active:
             print("Alfa Cortada")
+            new = ImagePDI(source).alpha_filter(int(self.kernel_text_input.text))
 
         img.source = new
         img.reload()
