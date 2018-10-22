@@ -50,6 +50,8 @@
         fat_button: _fatbutton
         noise_button: _noisebutton
         morph_button: _morphbutton
+        seg_button: _segbutton
+        comp_button: _compbutton
         
         orientation: 'horizontal'
         size_hint: 1, None
@@ -66,7 +68,7 @@
             id: _transbutton
             toolbar: _toolbar
             group:'processing'
-            text: 'Transformacao'
+            text: 'Transformação'
             size_hint: .20, 1
             on_press: self.set_index()
 
@@ -101,7 +103,7 @@
             id: _detbutton
             toolbar: _toolbar
             group:'processing'
-            text: 'DetectaBordas'
+            text: 'Bordas'
             size_hint: .20, 1
             #height: 24
             on_press: self.set_index()
@@ -110,7 +112,7 @@
             id: _fatbutton
             toolbar: _toolbar
             group:'processing'
-            text: 'Fatiamento de Intensidades'
+            text: 'Fatiamento'
             size_hint: .20, 1
             #height: 24
             on_press: self.set_index()
@@ -129,6 +131,24 @@
             toolbar: _toolbar
             group:'processing'
             text: 'Morfologia'
+            size_hint: .20, 1
+            #height: 24
+            on_press: self.set_index()
+
+        ButtonTool:
+            id: _segbutton
+            toolbar: _toolbar
+            group:'processing'
+            text: 'Segmentação'
+            size_hint: .20, 1
+            #height: 24
+            on_press: self.set_index()
+
+        ButtonTool:
+            id: _compbutton
+            toolbar: _toolbar
+            group:'processing'
+            text: 'Compressão'
             size_hint: .20, 1
             #height: 24
             on_press: self.set_index()

@@ -42,3 +42,7 @@ class ButtonTool(ToggleButton):
             return 7
         elif self.toolbar.morph_button == widget:
             return 8
+        elif self.toolbar.seg_button == widget:
+            return 9
+        elif self.toolbar.comp_button == widget:
+            return 10

@@ -7,7 +7,6 @@ from kivy.uix.popup import Popup
 from kivy.uix.floatlayout import FloatLayout
 import numpy as np
 from scipy import ndimage
-import 
 
 class TransformProperties(BoxLayout):
     lonst_text_input = ObjectProperty(None)
@@ -300,3 +299,9 @@ class MorphProperties(BoxLayout):
 class ESDialog(FloatLayout):
     select = ObjectProperty(None)
     cancel = ObjectProperty(None)
+
+class SegmentationProperties(BoxLayout):
+    pass
+
+class CompressProperties(BoxLayout):
+    pass

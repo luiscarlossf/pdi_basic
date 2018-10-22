@@ -188,10 +188,36 @@ class ImagePDI:
         return new_file_name
 
     def gaussian_noise(self):
-        pass
+        row,col,ch= self.image.shape
+        mean = 0
+        var = 0.1
+        sigma = var**0.5
+        gauss = np.random.normal(mean,sigma,(row,col,ch))
+        gauss = gauss.reshape(row,col,ch)
+        noisy = self.image + gauss
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, noisy)
+        return new_file_name
 
     def pepper_salt_noise(self):
-        pass
+        row,col,ch = self.image.shape
+        s_vs_p = 0.5
+        amount = 0.004
+        out = np.copy(self.image)
+        # Salt mode
+        num_salt = np.ceil(amount * self.image.size * s_vs_p)
+        coords = [np.random.randint(0, i - 1, int(num_salt))
+              for i in self.image.shape]
+        out[coords] = 1
+
+        # Pepper mode
+        num_pepper = np.ceil(amount* self.image.size * (1. - s_vs_p))
+        coords = [np.random.randint(0, i - 1, int(num_pepper))
+              for i in self.image.shape]
+        out[coords] = 0
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, out)
+        return out
 
     def erosion(self):
         pass
@@ -203,6 +229,12 @@ class ImagePDI:
         pass
 
     def closing(self):
+        pass
+
+    def region_growing(self):
+        pass
+
+    def huffman(self):
         pass
 
 if __name__=="__main__":
