@@ -3,7 +3,11 @@ from kivy.properties import ObjectProperty
 from kivy.uix.colorpicker import ColorWheel  # , ColorPicker  # Unused
 from kivy.uix.dropdown import DropDown
 from image_pdi import ImagePDI
-
+from kivy.uix.popup import Popup
+from kivy.uix.floatlayout import FloatLayout
+import numpy as np
+from scipy import ndimage
+import 
 
 class TransformProperties(BoxLayout):
     lonst_text_input = ObjectProperty(None)
@@ -227,3 +231,72 @@ class NoiseProperties(BoxLayout):
         img.source = new
         img.reload()
 
+class MorphProperties(BoxLayout):
+    es_name = ObjectProperty(None)
+    es_button = ObjectProperty(None)
+    erosion = ObjectProperty(None)
+    dilatation = ObjectProperty(None)
+    opening = ObjectProperty(None)
+    closing = ObjectProperty(None)
+
+    def __init__(self, ui=None, **kwargs):
+        self.ui = ui
+        self.tam = None
+        self.type_es = None
+        self._popup = None
+        super(MorphProperties, self).__init__(**kwargs)
+
+    def on_press(self):
+        img = self.ui.pdi_space.get_image()
+        source = str(img.source)
+        self.ui.processing_bar.image_currant = source
+        new = None
+        if self.erosion.active:
+            print("Erosion")
+            new = ImagePDI(source).erosion()
+        elif self.dilatation.active:
+            print("Dilatação")
+            new = ImagePDI(source).dilatation()
+        elif self.opening.active:
+            print("Abertura")
+            new = ImagePDI(source).opening()
+        elif self.closing.active:
+            print("Fechamento")
+            new = ImagePDI(source).closing()
+
+        img.source = new
+        img.reload()
+
+    def selection_es(self):
+        content = ESDialog(select=self.select, cancel=self.dismiss_popup)
+        self._popup = Popup(title="Select Element Structure", content=content,
+                        size_hint=(0.9, 0.9))
+        self._popup.open()
+
+    def select(self, tamanho, type_es):
+        self.tam = int(tamanho)
+        self.type_es = int(type_es) + 1
+        print("Selecionado: ", tam, "-", type_es)
+        if type_es  == 1:
+            pass
+        elif type_es == 2:
+            pass
+        elif type_es == 3:
+            pass
+        elif type_es == 4:
+            pass
+        elif type_es == 5:
+            pass
+        elif type_es == 6:
+            pass
+        elif type_es == 7:
+            pass
+        self.dismiss_popup()
+
+    def dismiss_popup(self):
+        self._popup.dismiss()
+
+
+class ESDialog(FloatLayout):
+    select = ObjectProperty(None)
+    cancel = ObjectProperty(None)

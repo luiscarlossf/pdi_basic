@@ -49,7 +49,8 @@
         det_button: _detbutton
         fat_button: _fatbutton
         noise_button: _noisebutton
-
+        morph_button: _morphbutton
+        
         orientation: 'horizontal'
         size_hint: 1, None
         height: 80
@@ -122,6 +123,16 @@
             size_hint: .20, 1
             #height: 24
             on_press: self.set_index()
+
+        ButtonTool:
+            id: _morphbutton
+            toolbar: _toolbar
+            group:'processing'
+            text: 'Morfologia'
+            size_hint: .20, 1
+            #height: 24
+            on_press: self.set_index()
+
 #PDISPACE
     PdiSpace:
         id: _pdispaceTool

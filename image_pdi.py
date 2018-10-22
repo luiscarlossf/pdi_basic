@@ -193,6 +193,18 @@ class ImagePDI:
     def pepper_salt_noise(self):
         pass
 
+    def erosion(self):
+        pass
+
+    def dilatation(self):
+        pass
+
+    def opening(self):
+        pass
+
+    def closing(self):
+        pass
+
 if __name__=="__main__":
     y = ImagePDI("./images/images_chapter_03/Fig3.35(a).jpg")
     y.media_filter(35)

@@ -1,5 +1,6 @@
 #.:kivy 1.10.0
 #:import properties properties
+#:import es es
 
 <TransformProperties>:
     const_text_input: _constTextInput
@@ -250,13 +251,13 @@
             cols: 2
             CheckBox:
                 id: _gaussian
-                group: 'filter'
+                group: 'noise'
             Label:
                 halign: 'left'
                 text:  'Gaussiano'
             CheckBox:
                 id: _pepper_salt
-                group: 'filter'
+                group: 'noise'
             Label:
                 halign: 'left'
                 text:  'Sal e pimenta'
@@ -271,3 +272,89 @@
         Button:
             text: 'Aplicar Filtro'
             on_press: _noise.on_press()
+
+<MorphProperties>:
+    id: _morph
+    es_name: _es_name
+    es_button: _es_button
+    erosion: _erosion
+    dilatation: _dilatation
+    opening: _opening
+    closing: _closing
+
+    BoxLayout:
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            Label:
+                id: _es_name
+
+            Button:
+                id: _es_button
+                text: 'Selecionar ES'
+                on_press: _morph.selection_es()
+
+        GridLayout:
+            cols: 2
+
+            CheckBox:
+                id: _erosion
+                group: 'morph'
+            Label:
+                halign: 'left'
+                text:  'Erosão'
+
+            CheckBox:
+                id: _dilatation
+                group: 'morph'
+            Label:
+                halign: 'left'
+                text:  'Dilatação'
+
+            CheckBox:
+                id: _opening
+                group: 'morph'
+            Label:
+                halign: 'left'
+                text:  'Abertura'
+
+            CheckBox:
+                id: _closing
+                group: 'morph'
+            Label:
+                halign: 'left'
+                text:  'Fechamento'
+
+        Button:
+            text: 'Aplicar'
+            on_press: _morph.on_press()
+
+<ESDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        GridLayout:
+            cols:2
+            size_hint: 1, None
+            height: 170 
+            Label:
+                text: 'Tamanho:'
+            TextInput:
+                id: _tam
+                text: '5'
+        RV:
+            id: _rv
+            size_hint: 1, None
+            height: 150
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Select"
+                on_release: root.select(_tam.text, _rv.type_es)

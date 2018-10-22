@@ -40,3 +40,5 @@ class ButtonTool(ToggleButton):
             return 6
         elif self.toolbar.noise_button == widget:
             return 7
+        elif self.toolbar.morph_button == widget:
+            return 8
