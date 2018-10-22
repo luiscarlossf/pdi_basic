@@ -188,19 +188,19 @@ class ImagePDI:
         return new_file_name
 
     def gaussian_noise(self):
-        row,col,ch= self.image.shape
+        row,col= self.image.shape
         mean = 0
         var = 0.1
         sigma = var**0.5
-        gauss = np.random.normal(mean,sigma,(row,col,ch))
-        gauss = gauss.reshape(row,col,ch)
+        gauss = np.random.normal(mean,sigma,(row,col))
+        gauss = gauss.reshape(row,col)
         noisy = self.image + gauss
         new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(new_file_name, noisy)
         return new_file_name
 
     def pepper_salt_noise(self):
-        row,col,ch = self.image.shape
+        row,col= self.image.shape
         s_vs_p = 0.5
         amount = 0.004
         out = np.copy(self.image)
@@ -208,7 +208,7 @@ class ImagePDI:
         num_salt = np.ceil(amount * self.image.size * s_vs_p)
         coords = [np.random.randint(0, i - 1, int(num_salt))
               for i in self.image.shape]
-        out[coords] = 1
+        out[coords] = 255
 
         # Pepper mode
         num_pepper = np.ceil(amount* self.image.size * (1. - s_vs_p))
@@ -217,19 +217,69 @@ class ImagePDI:
         out[coords] = 0
         new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
         cv2.imwrite(new_file_name, out)
-        return out
+        return new_file_name
 
     def erosion(self):
-        pass
+        """ Método para aplicar a erosão na imagem
+        Pode - se fazer operações morfológicas no kernel antes de executar
+        Efeitos: diminuir partículas,
+        eliminar componentes menores que o elemento estruturante,
+        aumentar buracos,
+        permitir a separação de componentes conectados """
+
+        kernel = np.ones((5, 5), np.uint8)
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
+
+        erosion = cv2.erode(self.image, kernel, iterations=1)
+        cv2.imshow("Erosao", erosion)
+        cv2.waitKey(5000)
 
     def dilatation(self):
-        pass
+        """ Método para realizar a dilatação na imagem
+        Efeitos: aumentar partículas,
+        preencher buracos,
+        conectar componentes próximos """
+
+        kernel = np.ones((5, 5), np.uint8)
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
+
+        dilatation = cv2.dilate(self.image, kernel, iterations=1)
+        cv2.imshow("Dilatacao", dilatation)
+        cv2.waitKey(5000)
 
     def opening(self):
-        pass
+        """ Método para realizar a abertura da imagem
+        A abertura elimina pequenos componentes e suaviza o contorno
+        Efeitos: separa componentes,
+        elimina pequenos componentes """
+
+        kernel = np.ones((5, 5), np.uint8)
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
+
+        opening = cv2.morphologyEx(self.image, cv2.MORPH_OPEN, kernel)
+        cv2.imshow("Abertura", opening)
+        cv2.waitKey(5000)
 
     def closing(self):
-        pass
+         """ Método para realizar o fechamento da imagem
+        O fechamento fecha pequenos buracos e conecta componentes
+        Efeitos:  Preenche buracos no interior dos componentes,
+        conecta componentes próximos """
+
+        kernel = np.ones((5, 5), np.uint8)
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        #   kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
+
+        closing = cv2.morphologyEx(self.image, cv2.MORPH_CLOSE, kernel)
+        cv2.imshow("Fechamento", closing)
+        cv2.waitKey(5000)
 
     def region_growing(self):
         pass
