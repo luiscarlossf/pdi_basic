@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 from PIL import ImageFilter, Image as img
 from matplotlib import pyplot as plt
+from scipy import ndimage
 
 
 
@@ -219,73 +220,90 @@ class ImagePDI:
         cv2.imwrite(new_file_name, out)
         return new_file_name
 
-    def erosion(self):
-        """ Método para aplicar a erosão na imagem
-        Pode - se fazer operações morfológicas no kernel antes de executar
-        Efeitos: diminuir partículas,
-        eliminar componentes menores que o elemento estruturante,
-        aumentar buracos,
-        permitir a separação de componentes conectados """
-
-        kernel = np.ones((5, 5), np.uint8)
-        #   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
-        #   kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-        #   kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
-
-        erosion = cv2.erode(self.image, kernel, iterations=1)
-        cv2.imshow("Erosao", erosion)
+    def erosion(self, tam, type_es):
+        kernel = self.generate_es(tam, type_es)
+        e = cv2.erode(self.image, kernel, iterations=1)
+        cv2.imshow("Erosao", e)
         cv2.waitKey(5000)
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, e)
+        return new_file_name
 
-    def dilatation(self):
+    def dilatation(self, tam, type_es):
         """ Método para realizar a dilatação na imagem
         Efeitos: aumentar partículas,
         preencher buracos,
         conectar componentes próximos """
 
-        kernel = np.ones((5, 5), np.uint8)
+        kernel = self.generate_es(tam, type_es)
         #   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
         #   kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
         #   kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
 
-        dilatation = cv2.dilate(self.image, kernel, iterations=1)
-        cv2.imshow("Dilatacao", dilatation)
+        d = cv2.dilate(self.image, kernel, iterations=1)
+        cv2.imshow("Dilatacao", d)
         cv2.waitKey(5000)
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, d)
+        return new_file_name
 
-    def opening(self):
+    def opening(self, tam, type_es):
         """ Método para realizar a abertura da imagem
         A abertura elimina pequenos componentes e suaviza o contorno
         Efeitos: separa componentes,
         elimina pequenos componentes """
 
-        kernel = np.ones((5, 5), np.uint8)
+        kernel = self.generate_es(tam, type_es)
         #   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
         #   kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
         #   kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
 
-        opening = cv2.morphologyEx(self.image, cv2.MORPH_OPEN, kernel)
-        cv2.imshow("Abertura", opening)
+        o = cv2.morphologyEx(self.image, cv2.MORPH_OPEN, kernel)
+        cv2.imshow("Abertura", o)
         cv2.waitKey(5000)
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, o)
+        return new_file_name
 
-    def closing(self):
-         """ Método para realizar o fechamento da imagem
+    def closing(self, tam, type_es):
+        """ Método para realizar o fechamento da imagem
         O fechamento fecha pequenos buracos e conecta componentes
         Efeitos:  Preenche buracos no interior dos componentes,
         conecta componentes próximos """
-
-        kernel = np.ones((5, 5), np.uint8)
+        kernel = self.generate_es(tam, type_es)
         #   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
         #   kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
         #   kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
-
-        closing = cv2.morphologyEx(self.image, cv2.MORPH_CLOSE, kernel)
-        cv2.imshow("Fechamento", closing)
+        c = cv2.morphologyEx(self.image, cv2.MORPH_CLOSE, kernel)
+        cv2.imshow("Fechamento", c)
         cv2.waitKey(5000)
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, c)
+        return new_file_name
 
     def region_growing(self):
         pass
 
     def huffman(self):
         pass
+
+    def generate_es(self, tam, type_es):
+        if type_es  == 1:
+            pass
+        elif type_es == 2:
+            pass
+        elif type_es == 3:
+            pass
+        elif type_es == 4:
+            pass
+        elif type_es == 5:
+            pass
+        elif type_es == 6:
+            a = np.ones((tam, tam), np.uint8)
+            return a
+        elif type_es == 7:
+            a = np.ones((tam, tam), np.uint8)
+            return a
 
 if __name__=="__main__":
     y = ImagePDI("./images/images_chapter_03/Fig3.35(a).jpg")

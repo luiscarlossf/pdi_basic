@@ -252,16 +252,16 @@ class MorphProperties(BoxLayout):
         new = None
         if self.erosion.active:
             print("Erosion")
-            new = ImagePDI(source).erosion()
+            new = ImagePDI(source).erosion(self.tam, self.type_es)
         elif self.dilatation.active:
             print("Dilatação")
-            new = ImagePDI(source).dilatation()
+            new = ImagePDI(source).dilatation(self.tam, self.type_es)
         elif self.opening.active:
             print("Abertura")
-            new = ImagePDI(source).opening()
+            new = ImagePDI(source).opening(self.tam, self.type_es)
         elif self.closing.active:
             print("Fechamento")
-            new = ImagePDI(source).closing()
+            new = ImagePDI(source).closing(self.tam, self.type_es)
 
         img.source = new
         img.reload()
@@ -275,21 +275,7 @@ class MorphProperties(BoxLayout):
     def select(self, tamanho, type_es):
         self.tam = int(tamanho)
         self.type_es = int(type_es) + 1
-        print("Selecionado: ", tam, "-", type_es)
-        if type_es  == 1:
-            pass
-        elif type_es == 2:
-            pass
-        elif type_es == 3:
-            pass
-        elif type_es == 4:
-            pass
-        elif type_es == 5:
-            pass
-        elif type_es == 6:
-            pass
-        elif type_es == 7:
-            pass
+        print("Selecionado: ", self.tam, "-", type_es)
         self.dismiss_popup()
 
     def dismiss_popup(self):
