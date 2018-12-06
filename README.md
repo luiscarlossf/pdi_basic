@@ -1,5 +1,6 @@
 # PDI PROJECT
 Editor básico de imagens com funções de Processamento Digital de Imagens. Usando a GUI framework Kivy e  a biblioteca OpenCV - Python.
+
 Métodos que estão incluídos:
 - Transformação de Intensidade
 - Fatiamento por plano de bits
