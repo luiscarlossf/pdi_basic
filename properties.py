@@ -287,7 +287,12 @@ class ESDialog(FloatLayout):
     cancel = ObjectProperty(None)
 
 class SegmentationProperties(BoxLayout):
-    pass
+    seed = "Nenhuma semente selecionada"
+
+    def __init__(self, ui=None, **kwargs):
+        self.ui = ui
+        super(SegmentationProperties, self).__init__(**kwargs)
+
 
 class CompressProperties(BoxLayout):
     pass

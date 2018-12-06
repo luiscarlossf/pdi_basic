@@ -360,5 +360,26 @@
                 on_release: root.select(_tam.text, _rv.type_es)
 
 <SegmentationProperties>:
+    id: _seg
+    orientation: 'vertical'
+    BoxLayout:
+        size_hint: 1, None
+        height: 40
+        Label:
+            #size_hint: 0.4, 1
+            text: "Limiar:"
+        TextInput:
+            size_hint: None, 1
+            width: 150
+
+    Label:
+        text: _seg.seed
+
+    Button:
+        size_hint: 1, None
+        height: 60
+        text: "Segmentar"
 
 <CompressProperties>:
+    Button:
+        text: 'Exibir tabela de compressão'

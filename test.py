@@ -3,6 +3,8 @@ import numpy as np
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
+from binaryheap import BinaryHeap
+from collections import Counter
 
 from image_pdi import ImagePDI as PI
 
@@ -116,6 +118,63 @@ def noisy(noise_typ,image):
       noisy = image + image * gauss
       return noisy
 
+class TreeLeaf:
+    def __init__(self, value):
+        self.value = value
+
+class TreeBranch:
+    """ Representação do nó interno da arvore de Huffman """
+
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+
+    def make_tree(freq_table):
+        """ Contrução e retorno da árvore de Huffman
+        Montagem da tabela de frequência """
+
+        trees = BinaryHeap()
+        trees.insert(TreeLeaf(None), 1)
+        for (symbol, freq) in freq_table.items():
+            trees.insert(TreeLeaf(symbol), freq)
+
+        while len(trees) > 1:
+            right, rfreq = trees.popmin()
+            left, lfreq = trees.popmin()
+            trees.insert(TreeBranch(left, right), lfreq + rfreq)
+
+        tree, _ = trees.popmin()
+        return tree
+
+    def make_encoding_table(huffman_tree):
+
+        table = {}
+
+        def recurse(tree, path):
+            """
+            Adiciona os valores correspondentes nas folhas
+            """
+            if isinstance(tree, TreeLeaf):
+                table[tree.value] = path
+            elif isinstance(tree, TreeBranch):
+                recurse(tree.left, path + (False,))
+                recurse(tree.right, path + (True,))
+            else:
+                raise TypeError('{} is not a tree type'.format(type(tree)))
+
+        recurse(huffman_tree, ())
+        return table
+
+    def make_freq_table(stream):
+
+        freqs = Counter()
+        buffer = bytearray(512)
+        while True:
+            count = stream.readinto(buffer)
+            freqs.update(buffer[:count])
+            if count < len(buffer):  # end of stream
+                break
+        return freqs
 
 if __name__ == '__main__':
     fatiamento(['0,50, 0'])
