@@ -5,7 +5,12 @@ Métodos que estão incluídos:
 - Fatiamento por plano de bits
 - Equalização de Histograma
 - Filtros espacias 
-   - Mediana, Media, Máximo, Mínimo, Média Geomátrica, Média Cortada
+   - Mediana
+   - Media
+   - Máximo
+   - Mínimo
+   - Média Geomátrica
+   - Média Cortada
 - Detecção de bordas
 - Fatiamento por pseudocores
 - Geração de ruídos Gaussiano e Sal e Pimenta
