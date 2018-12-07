@@ -44,7 +44,7 @@ class PdiApp(App):
     """
       Classe principal da aplicação
     """
-    
+
     def build(self):
         return Pdi()
 

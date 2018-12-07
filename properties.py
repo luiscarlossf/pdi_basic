@@ -4,6 +4,8 @@ from kivy.uix.colorpicker import ColorWheel  # , ColorPicker  # Unused
 from kivy.uix.dropdown import DropDown
 from image_pdi import ImagePDI
 from kivy.uix.popup import Popup
+from kivy.uix.button import Button
+from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
 import numpy as np
 from scipy import ndimage
@@ -287,7 +289,38 @@ class ESDialog(FloatLayout):
     cancel = ObjectProperty(None)
 
 class SegmentationProperties(BoxLayout):
-    pass
+    def __init__(self, ui=None, **kwargs):
+        self.ui = ui
+        super(SegmentationProperties, self).__init__(**kwargs)
 
 class CompressProperties(BoxLayout):
-    pass
+    def __init__(self, ui=None, **kwargs):
+        self.ui = ui
+        super(CompressProperties, self).__init__(**kwargs)
+
+class GrainsProperties(BoxLayout):
+    def __init__(self, ui=None, **kwargs):
+        self.ui = ui
+        super(GrainsProperties, self).__init__(**kwargs)
+
+    def detect(self):
+        img = self.ui.pdi_space.get_image()
+        source = str(img.source)
+        self.ui.processing_bar.image_currant = source
+        grains = ImagePDI(source).detect_grains()
+        text_grains = "\n\n Arroz: " + str(grains[0]) + \
+                       "\nMilho: " + str(grains[1]) + \
+                       "\nFeijão: " + str(grains[2]) + \
+                       "\nFeijão Preto: " + str(grains[3]) + \
+                       "\nFava: " + str(grains[4]) +"\n\n"
+
+        box = BoxLayout(orientation='vertical')
+        box.add_widget(Label(text=text_grains))
+        b = Button(text='Fechar')
+        box.add_widget(b)
+        content = box
+        popup = Popup(title="Grãos", content=content, auto_dismiss=False, size_hint=(None, None), size=(400, 400))
+
+        # bind the on_press event of the button to the dismiss function
+        b.bind(on_press=popup.dismiss)
+        popup.open()
