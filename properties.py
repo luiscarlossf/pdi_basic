@@ -311,18 +311,30 @@ class GrainsProperties(BoxLayout):
         source = str(img.source)
         self.ui.processing_bar.image_currant = source
         grains = ImagePDI(source).detect_grains()
-        text_grains = "\n\n Arroz: " + str(grains[0]) + \
-                       "\nMilho: " + str(grains[1]) + \
-                       "\nFeijão: " + str(grains[2]) + \
-                       "\nFeijão Preto: " + str(grains[3]) + \
-                       "\nFava: " + str(grains[4]) +"\n\n"
+        text_grains = " "
+        cont = 0
+        if grains[0] != 0:
+            text_grains += "\n\n Arroz: " + str(grains[0])
+            cont += 1
+        if grains[1] != 0:
+            text_grains += "\nMilho: " + str(grains[1])
+            cont += 1
+        if grains[2] != 0:
+            text_grains += "\nFeijão: " + str(grains[2])
+            cont += 1
+        if grains[3] != 0:
+            text_grains += "\nFeijão Preto: " + str(grains[3])
+            cont += 1
+        if grains[4] != 0:
+            text_grains += "\nFava: " + str(grains[4]) +"\n\n"
+            cont += 1
 
         box = BoxLayout(orientation='vertical')
         box.add_widget(Label(text=text_grains))
         b = Button(text='Fechar')
         box.add_widget(b)
         content = box
-        popup = Popup(title="Grãos", content=content, auto_dismiss=False, size_hint=(None, None), size=(400, 400))
+        popup = Popup(title=str(cont)+" Tipos de Grãos", content=content, auto_dismiss=False, size_hint=(None, None), size=(400, 400))
 
         # bind the on_press event of the button to the dismiss function
         b.bind(on_press=popup.dismiss)
