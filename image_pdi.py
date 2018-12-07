@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 from scipy import ndimage
 from skimage.color import rgb2hsv
 from skimage.filters import median, threshold_triangle
+from skimage.filter.rank import geometric_mean
 from skimage.measure import label, regionprops
 from skimage.io import imread
 from skimage.segmentation import clear_border
@@ -72,7 +73,10 @@ class ImagePDI:
         return new_file_name
 
     def geometric_filter(self, kernel):
-        pass
+        geometric = geometric_mean(self.image, kernel)
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, geometric)
+        return new_file_name
 
     def alpha_filter(self, kernel):
         pass
