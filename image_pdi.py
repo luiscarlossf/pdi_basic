@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 from scipy import ndimage
 from skimage.color import rgb2hsv
 from skimage.filters import median, threshold_triangle
-from skimage.filter.rank import geometric_mean
+from skimage.filters.rank import geometric_mean
 from skimage.measure import label, regionprops
 from skimage.io import imread
 from skimage.segmentation import clear_border
