@@ -5,7 +5,7 @@ from kivy.uix.label import Label
 
 from properties import DefaultProperties, TransformProperties, BitProperties, HistogramProperties
 from properties import DetectionProperties, FatColorProperties, FilterProperties, NoiseProperties
-from properties import MorphProperties, SegmentationProperties, CompressProperties
+from properties import MorphProperties, SegmentationProperties, CompressProperties, GrainsProperties
 
 
 
@@ -15,12 +15,13 @@ class ProcessingBar(BoxLayout):
     index = -1
     p = [DefaultProperties(), TransformProperties(ui=ui), BitProperties(), HistogramProperties(ui=ui),
          FilterProperties(), DetectionProperties(), FatColorProperties(), NoiseProperties(ui=ui), MorphProperties(),
-         SegmentationProperties(), CompressProperties()]
+         SegmentationProperties(), CompressProperties(), GrainsProperties()]
 
     def add_properties(self, index):
         self.index = index
         self.clear_widgets()
         self.p[index].ui = self.ui
+        print("Adicionando Prop")
         self.add_widget(Label(text='Propriedades', size_hint=(1, 0.2)))
         self.add_widget(self.p[index])
         self.add_widget(RevertButton(
@@ -65,5 +66,3 @@ class CloseButton(Button):
             panel_images.switch_to(panel_images.tab_list[0], do_scroll=False)
         except IndexError:
             panel_images.clear_widgets()
-
-

@@ -46,3 +46,5 @@ class ButtonTool(ToggleButton):
             return 9
         elif self.toolbar.comp_button == widget:
             return 10
+        elif self.toolbar.grains_button == widget:
+            return 11

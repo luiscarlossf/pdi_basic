@@ -5,6 +5,14 @@ import numpy as np
 from PIL import ImageFilter, Image as img
 from matplotlib import pyplot as plt
 from scipy import ndimage
+from skimage.color import rgb2hsv
+from skimage.filters import median, threshold_triangle
+from skimage.filter.rank import geometric_mean
+from skimage.measure import label, regionprops
+from skimage.io import imread
+from skimage.segmentation import clear_border
+from skimage.morphology import square
+import numpy as np
 
 
 
@@ -65,7 +73,10 @@ class ImagePDI:
         return new_file_name
 
     def geometric_filter(self, kernel):
-        pass
+        geometric = geometric_mean(self.image, kernel)
+        new_file_name = "./images/temporarias/" + os.path.basename(self.filename)
+        cv2.imwrite(new_file_name, geometric)
+        return new_file_name
 
     def alpha_filter(self, kernel):
         pass
@@ -155,7 +166,7 @@ class ImagePDI:
         cv2.imwrite(new_file_name, equa)
         plt.savefig("./images/temporarias/histogram.jpg")
         return new_file_name
-        # res = np.hstack((img, equa)) 
+        # res = np.hstack((img, equa))
         #colocar imagem original e equa lado a lado
         # cv2.imwrite("D:\imagem_equalizada.jpg", res)
 
@@ -305,8 +316,63 @@ class ImagePDI:
             a = np.ones((tam, tam), np.uint8)
             return a
 
+    def detect_grains(self):
+        #Conversão de cor da imagem para HSV
+        im2 = rgb2hsv(imread(self.filename))
+        im = im2[:, :, 2] #Intensidade
+        saturacao = im2[:, :, 1] #Saturação
+        color = im2[:, :, 0] #Matiz
+
+        #Removendo imperfeições da imagem (suavizando)
+        im = median(im, square(10))
+        #É aplica a mediana a cores, pois pegamos a cor do centróide
+        #da semente para comparação, para diminuir a chance de a cor
+        #não corresponder as demais partes da sementes.
+        color = median(im, square(10))
+
+        #Extraindo limiar
+        threshold = threshold_triangle(im)
+        #Binarizando a imagem
+        im = im < threshold
+
+        #Removendo elementos que estão na borda
+        im = clear_border(im)
+
+        #Rotulando os objetos
+        l = label(im.astype(np.uint8), connectivity=2)
+
+        #Extraindo as propriedades dos objetos rotulados
+        arroz = 0
+        milho = 0
+        feijao = 0
+        feijao_preto = 0
+        fava = 0
+        props = regionprops(l)
+        for prop in props:
+        	cor = color[int(prop.centroid[0]), int(prop.centroid[1])]
+        	sat = saturacao[int(prop.centroid[0]), int(prop.centroid[1])]
+        	intensity = im2[int(prop.centroid[0]), int(prop.centroid[1]), 2]
+        	if prop.area > 2000:
+        		fava += 1
+        	elif (prop.area > 1000) and (cor < 65):
+        		feijao_preto += 1
+        	elif prop.area > 390 :
+        		if (cor >= 109):
+        			milho += 1
+        		else:
+        			feijao += 1
+        	else :
+        		arroz += 1
+
+        print("SEMENTES: \n")
+        print("Arroz: ", arroz)
+        print("Milho: ", milho)
+        print("Feijão: ", feijao)
+        print("Feijao Preto: ", feijao_preto)
+        print("Fava : ", fava)
+        return [arroz, milho, feijao, feijao_preto, fava]
+
+
 if __name__=="__main__":
     y = ImagePDI("./images/images_chapter_03/Fig3.35(a).jpg")
     y.media_filter(35)
-
-
