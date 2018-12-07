@@ -224,7 +224,7 @@
         FileChooserIconView:
             id: filechooser
             path: './'
-            filters: ['*.png', '*.jpg','*.JPG', '*.JPEG' '*.jpeg','*.bmp','*.tif']
+            filters: ['*.png', '*.jpeg', '*.jpg','*.JPG', '*.JPEG','*.bmp','*.tif']
 
         BoxLayout:
             size_hint_y: None
@@ -245,7 +245,7 @@
         orientation: "vertical"
         FileChooserIconView:
             id: filechooser
-            filters: ['*.png', '*.jpg', '*.jpeg','*.bmp', '*.JPG', '*.JPEG', '*.tif']
+            filters: ['*.png', '*.jpeg', '*.jpg','*.bmp', '*.JPG', '*.JPEG', '*.tif']
             path: './'
             on_selection: text_input.text = self.selection and self.selection[0] or ''
 
